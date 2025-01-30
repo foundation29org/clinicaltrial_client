@@ -1,0 +1,684 @@
+<div *ngIf="mode=='1'" [@testani]="mode">
+    <div class="col-md-12">
+        <div *ngIf="docs.length == 0" class="mt-3">
+            <div class="offset-md-3 col-md-6 center-elements mt-5 mb-4">
+                <h1 class="text-center text-bold-700">{{'demo.t1' | translate }}</h1>
+                <p>{{'demo.des' | translate }}</p>
+            </div>
+            <div class="offset-md-1 col-md-10">
+                <div class="card border round p-3">
+                    <div class="container-home2">
+                        <h1 class="mt-3 title-home text-center text-bold-700 mb-4">{{'demo.How do you want to start?' |
+                            translate }}</h1>
+                        <div class="mb-4 row row-home w-100">
+                            <div class="col-md-4">
+                                <img class="logo-img pointer" [src]="icons[3].data"
+                                    (click)="entryOpt('opt1', contentPhoto)" />
+                                <buttom class="btn btn-sm btn-primary text-bold-700 mt-2"
+                                    (click)="entryOpt('opt1', contentPhoto)">{{'demo.Take a photo' | translate }}
+                                </buttom>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="logo-img" [src]="icons[4].data" />
+                                <div class="container-custom2">
+                                    <input class="pointer" aria-label="new file" type="file" #fileDropRef
+                                        id="fileDropRef" multiple (change)="onFileChangePDF($event);"
+                                        accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
+                                    <buttom class="btn btn-sm btn-primary text-bold-700 mt-2" for="fileDropRef">
+                                        {{'demo.Use a file' | translate }}</buttom>
+                                </div>
+                                <!--<buttom class="btn btn-sm btn-primary text-bold-700 mt-2" (click)="entryOpt('opt2', null)">Usar uno o varios informes</buttom>-->
+                            </div>
+                            <div class="col-md-4">
+                                <img class="logo-img pointer" [src]="icons[5].data"
+                                    (click)="showPanelMedium(contentSummaryDx)" />
+                                <buttom class="btn btn-sm btn-primary text-bold-700 mt-2"
+                                    (click)="showPanelMedium(contentSummaryDx)">{{'demo.Write text' | translate }}
+                                </buttom>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer p-2">
+                <a href="javascript:;" (click)="showPolicy()" class="policy-link">{{'disclaimer.t2' | translate }}</a>
+            </div>
+        </div>
+        <div *ngIf="docs.length > 0">
+            <div *ngIf="!loadedDocs">
+                <div class="mt-4 mx-auto center-elements" style="max-width: 40rem !important;">
+                    <em class="fa fa-spinner fa-spin fa-3x fa-fw info"></em>
+                    <p>{{'generics.Please wait' | translate }}</p>
+                </div>
+            </div>
+            <div *ngIf="loadedDocs">
+
+                <div class="mt-4 col-md-12">
+                    <div class="col-md-12 mb-3 center-elements">
+                        <buttom class="buttomback2 mb-2 btn btn-sm btn-primary text-bold-700" (click)="backmode0()">{{'demo.New patient' | translate }}</buttom>
+                        <h4 (click)="showModeGod()">{{'demo.Summarize genetic reports' |
+                            translate }}</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="card" *ngIf="docs.length > 0">
+                                <!--<div class="card-content">
+                                    <div class="card-body py-0">
+                                        <div class="media pb-1">
+                                            <div class="media-body text-left">
+                                                <span *ngIf="loadedDocs">
+                                                    <h3 class="font-large-1 mb-0" *ngIf="docs.length>0" (click)="showModeGod()">
+                                                        {{docs.length}}</h3>
+                                                    <h3 class="font-large-1 mb-0" *ngIf="docs.length==0">0</h3>
+                                                </span>
+                                                <span *ngIf="!loadedDocs">
+                                                    <em class="fa fa-spinner fa-spin fa-fw primary"></em>
+                                                </span>
+                                                <span>{{'home.s1.1' | translate }}</span>
+                                            </div>
+                                            <div class="media-right text-right">
+                                                <em class="fa fa-files-o secondary fa-2x"></em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div>
+                                    <hr class="mt-0 mb-0">
+                                    <div *ngFor="let doc of docs; let i = index " class="">
+                                        <div class="card-body border-bottom"
+                                            [ngClass]="{'panelHearder': innerWidth>992}">
+                                            <span class="text-left">
+                                                <span class="dark nav-item pt-2" ngbDropdown display="dynamic"
+                                                    placement="bottom-right" style="position: absolute; right: 0px;">
+                                                    <a class="position-relative colorlink" style="padding: 0rem 1rem;"
+                                                        id="dropdownSympt{{i}}" ngbDropdownToggle
+                                                        title="{{'generics.Options' | translate }}">
+                                                        <i class="fa fa-ellipsis-v fa-1_5x"></i>
+                                                    </a>
+                                                    <div ngbDropdownMenu aria-labelledby="dropdownSympt{{i}}"
+                                                        class="dropdown">
+                                                        <a class="dropdown-item py-1 border-bottom"
+                                                            (click)="getBlobUrl(doc)" target="_blank">
+                                                            <i class="fa fa-file"></i>
+                                                            <span class="ml-2">{{'messages.m1.3' | translate }}</span>
+                                                        </a>
+                                                        <!--<a class="dropdown-item py-1" href="javascript:;"
+                                                            (click)="openResults(doc, contentSummaryDoc)">
+                                                            <i class="fa fa-file"></i><span
+                                                                class="ml-2">{{'messages.m1.2' | translate
+                                                                }}</span>
+                                                        </a>-->
+                                                        <a *ngIf="doc.state=='done'" class="dropdown-item py-1 danger"
+                                                            href="javascript:;" (click)="deleteDoc(doc, i);">
+                                                            <i class="fa fa-trash"></i><span
+                                                                class="ml-2">{{'generics.Delete' | translate
+                                                                }}</span>
+                                                        </a>
+                                                    </div>
+                                                </span>
+                                                <span *ngIf="doc.dataFile">
+                                                    <span class="d-block">{{doc.dataFile.name}}</span>
+                                                    <!--<span class="d-block text-muted">{{ doc.dataFile.event.size | bytes }} </span>-->
+                                                    <span *ngIf="doc.tokens>1000"
+                                                        class="d-block text-muted">{{doc.tokens | tokens}} </span>
+                                                </span>
+                                                <span>
+                                                    {{'generics.Status' | translate }}:
+                                                </span>
+                                                <span *ngIf="doc.state=='done'">
+                                                    <em class="fa fa-check fa-fw success"></em>
+                                                </span>
+                                                <span *ngIf="doc.state!='done' && doc.state!='failed'">
+                                                    <span *ngIf="doc.state=='uploading'">{{'messages.m1.1' | translate
+                                                        }}</span>
+                                                    <em class="fa fa-spinner fa-spin fa-fw info"></em>
+                                                </span>
+                                                <span *ngIf="doc.state=='failed'">
+                                                    <em class="fa fa-times fa-fw danger"></em>
+                                                </span>
+                                            </span>
+                                            <div class="d-block">
+                                                <span *ngIf="doc.numTotalEvents>0">
+                                                    <span *ngIf="doc.numLeftEvents>0">
+                                                        {{doc.numLeftEvents}} {{'home.of' | translate }}
+                                                        {{doc.numTotalEvents}} {{'home.unchecked events' | translate }}
+                                                    </span>
+                                                    <span *ngIf="doc.numLeftEvents==0">
+                                                        {{doc.numTotalEvents}} {{'home.checked events' | translate }}
+                                                    </span>
+                                                    <span></span>
+                                                </span>
+                                                <span *ngIf="doc.numTotalEvents==0">{{'home.No events have been
+                                                    detected' | translate }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-2" *ngIf="totalTokens>1000">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar"
+                                                [style.width]="(totalTokens / TOKENS_LIMIT) * 100 + '%'"
+                                                [attr.aria-valuenow]="totalTokens" aria-valuemin="0"
+                                                aria-valuemax="TOKENS_LIMIT">
+                                            </div>
+                                        </div>
+                                        <p> {{totalTokens | tokens}} / {{TOKENS_LIMIT |tokens}}</p>
+                                        <p *ngIf="totalTokens>TOKENS_LIMIT" class="danger"> {{'demo.Tokens limit
+                                            exceeded' | translate }}</p>
+                                    </div>
+
+                                </div>
+                                <div class="border-top card-footer center-elements" style="background-color: #d9d9d9;">
+                                    <p class="text-bold-700">{{'demo.Add new reports' | translate }}</p>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div><img class="logo-img-sm pointer" [src]="icons[3].data" width="40px"
+                                                    (click)="entryOpt('opt1', contentPhoto)" /></div>
+                                            <div>
+                                                <buttom class="btnblock btn btn-sm btn-primary mt-2"
+                                                    (click)="entryOpt('opt1', contentPhoto)">{{'demo.Take a photo' |
+                                                    translate }}</buttom>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div><img class="logo-img-sm" [src]="icons[4].data" width="40px" /></div>
+                                            <div>
+                                                <div class="container-custom2">
+                                                    <input class="pointer" aria-label="new file" type="file"
+                                                        #fileDropRef id="fileDropRef" multiple
+                                                        (change)="onFileChangePDF($event);"
+                                                        accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
+                                                    <buttom class="btnblock btn btn-sm btn-primary mt-2"
+                                                        for="fileDropRef">{{'demo.Use a file' | translate }}</buttom>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div><img class="logo-img-sm pointer" [src]="icons[5].data" width="40px"
+                                                    (click)="showPanelMedium(contentSummaryDx)" /></div>
+                                            <div>
+                                                <buttom class="btnblock btn btn-sm btn-primary mt-2"
+                                                    (click)="showPanelMedium(contentSummaryDx)">{{'demo.Write text' |
+                                                    translate }}</buttom>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--<button class="mt-3 btn btn-primary" style="padding: 0.2rem 0.57rem;" 
+                                    [disabled]="callingOpenai" (click)="openFileInput(fileDropRef2)" aria-label="new file">
+                                    <em class="fa fa-paperclip fa-rotate-180 h-4 w-auto" width="1em" height="1em" fill="currentColor"></em> {{'demo.Add new reports' | translate }}
+                                    </button>
+                                    <p class="mt-2 d-block">{{'demo.Accepted files' | translate }}</p>
+                                    <input type="file" #fileDropRef2 id="fileDropRef2" multiple style="display: none;" (change)="onFileChangePDF($event)"
+                                    accept=".pdf, .docx" />-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7" *ngIf="docs.length>0">
+                            <div class="card card-body">
+                                <div class="row" *ngIf="callingSummary">
+                                    <div class="col-md-12">
+                                        <span class="d-block mt-2 center-elements"><em
+                                                class="fa fa-spinner fa-spin fa-3x fa-fw info"></em></span>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="!callingSummary && summaryPatient==''">
+                                    <div class="col-md-12">
+                                        <p class="text-bold-700 text-center">{{'demo.I want a summary for' | translate
+                                            }}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="center-elements">
+                                            <button class="mb-2 btn btn-primary btn-sm ml-1"
+                                                    (click)="madeSummary('adult')">
+                                                    {{ 'demo.Adults' | translate }}
+                                                </button>
+                                                <button class="mb-2 btn btn-primary btn-sm ml-1"
+                                                    (click)="madeSummary('adolescent')">
+                                                    {{ 'demo.Adolescents' | translate }}
+                                                </button>
+                                                <button class="mb-2 btn btn-primary btn-sm ml-1"
+                                                    (click)="madeSummary('child')">
+                                                    {{ 'demo.Children' | translate }}
+                                                </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="!callingSummary && summaryPatient!=''">
+                                    <div class="center-elements">
+                                        <div class="d-block mt-2">
+                                            <div class="center-elements">
+                                                <button class="btn btn-primary btn-sm mr-1"
+                                                    (click)="newSummary()">{{'demo.New summary' | translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1 mr-1"
+                                                    (click)="openFeedback()" target="_blank">{{'demo.Evaluate summary' |
+                                                    translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1 mr-1" (click)="showPanelTranslate(contentTranslate)">{{'generics.Translate' | translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1 mr-1" (click)="toggleEdit(showPanelEdit)">{{'generics.Edit' | translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1"
+                                                (click)="download()">{{'generics.ExportData' | translate }}</button>
+                                            </div>
+                                            <div class="custom-body text-left p-2">
+                                                <span [innerHTML]="summaryPatient | safe: 'html'"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div *ngIf="timeline.length>0 && !callingSummary" class="col-md-12">
+                                        <h4>{{'timeline.Timeline' | translate }}</h4>
+                                        <button class="btn btn-primary d-md-none mb-2" (click)="toggleFilters()">
+                                            <span *ngIf="!showFilters">{{'timeline.Show filters' | translate }}</span>
+                                            <span *ngIf="showFilters">{{'timeline.Hide filters' | translate }}</span>
+                                        </button>
+                                        <div class="row"
+                                            [ngClass]="{'d-none d-md-flex': !showFilters, 'd-block-inline': showFilters}">
+                                            <div class="col-md-12">{{'timeline.Filter by' | translate }}</div>
+                                            <div class="col-md-4 aligself-start">
+                                                <mat-form-field>
+                                                    <mat-label>{{'timeline.Start date' | translate }}</mat-label>
+                                                    <input readonly matInput [matDatepicker]="picker"
+                                                        [(ngModel)]="startDate" (dateChange)="filterEvents()"
+                                                        (click)="picker.open()">
+                                                    <button *ngIf="startDate!=null" matSuffix mat-icon-button
+                                                        aria-label="Clear" (click)="resetStartDate(null)"
+                                                        style="position: absolute; left: 30px;">
+                                                        <em class="fa fa-trash danger"></em>
+                                                    </button>
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-4 aligself-start">
+                                                <mat-form-field>
+                                                    <mat-label>{{'timeline.End date' | translate }}</mat-label>
+                                                    <input readonly matInput [matDatepicker]="picker2"
+                                                        [(ngModel)]="endDate" (dateChange)="filterEvents()"
+                                                        (click)="picker2.open()">
+                                                    <button *ngIf="endDate!=null" matSuffix mat-icon-button
+                                                        aria-label="Clear" (click)="resetEndDate(null)"
+                                                        style="position: absolute; left: 30px;">
+                                                        <em class="fa fa-trash danger"></em>
+                                                    </button>
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker2"></mat-datepicker-toggle>
+                                                    <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-4 aligself-start">
+                                                <mat-form-field>
+                                                    <mat-label>{{'timeline.Event type' | translate }}</mat-label>
+                                                    <mat-select [(ngModel)]="selectedEventType"
+                                                        (selectionChange)="filterEvents()">
+                                                        <mat-option [value]="null">{{'timeline.All Event Types' |
+                                                            translate }}</mat-option>
+                                                        <mat-option value="diagnosis">{{'timeline.Diagnoses' | translate
+                                                            }} 🩺</mat-option>
+                                                        <mat-option value="treatment">{{'timeline.Treatment' | translate
+                                                            }} 💊</mat-option>
+                                                        <mat-option value="test">{{'timeline.Tests' | translate }}
+                                                            🔬</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="timeline" *ngIf="groupedEvents.length>0">
+                                            <span class="pointer" (click)="toggleEventOrder()"
+                                                style="text-decoration: underline !important;color: #b30000;">
+                                                {{'generics.Sort' | translate }} <em class="fa"
+                                                    [class.fa-arrow-down]="!isOldestFirst"
+                                                    [class.fa-arrow-up]="isOldestFirst"></em>
+                                            </span>
+                                            <div *ngFor="let group of groupedEvents">
+                                                <div class="timeline-month-title">{{ group.monthYear | date: 'MMMM y' :
+                                                    '' : lang }}</div>
+                                                <div class="timeline-item" *ngFor="let event of group.events">
+                                                    <div class="timeline-dot"></div>
+                                                    <div class="timeline-content">
+                                                        <span>{{ event.date | date }}</span>
+                                                        <p>
+                                                            <span *ngIf="event.eventType == 'diagnosis'">🩺 </span>
+                                                            <span *ngIf="event.eventType == 'treatment'">💊 </span>
+                                                            <span *ngIf="event.eventType == 'test'">🔬 </span>
+                                                            {{ event.keyGeneticEvent }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="groupedEvents.length==0">
+                                            <p>{{'timeline.There are no events' | translate }}</p>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="offset-md-5 col-md-7" *ngIf="docs.length>0 && modegod">
+                            <div class="p-2 mt-2 rounded bg-grey" style="max-width: 700px;">
+                                <h5 class="text-muted mt-3 white">{{'home.s1.2' | translate }}
+                                    <button class="float-right btn btn-primary" (click)="deleteChat()">
+                                        <em class="fa fa-plus mr-1"></em> {{'home.s1.2.1' | translate }}
+                                    </button>
+                                    <button *ngIf="messages.length>1" class="float-right btn btn-primary mr-2"
+                                        (click)="copyConversationToClipboard()"> <em class="fa fa-clipboard mr-1"></em>
+                                        {{'generics.Copy' | translate }} Chat</button>
+                                </h5>
+                                <div class="chat-container">
+                                    <div *ngFor="let message of messages; let i = index" class="chat-messages"
+                                        [ngClass]="{'user-is-sender': message.isUser}">
+                                        <div *ngIf="!message.isUser" class="ia-message-container mr-2 bg-white border"
+                                            style="padding: 0.5rem;align-self: flex-start;border-radius: 1rem;">
+                                            <img src="assets/img/iconchat.webp" />
+                                        </div>
+                                        <div class="message-row"
+                                            [ngClass]="{'user-message': message.isUser, 'response-message': !message.isUser, 'response-form': !message.isUser}">
+                                            <ng-container *ngIf="!message.task && !message.file">
+                                                <span [innerHTML]="message.text | safe: 'html'"
+                                                    (click)="onMessageClick($event, i)"></span>
+                                                <span *ngIf="!message.isUser && i== messages.length-1"
+                                                    class="d-block mt-2">
+                                                    <span class="float-right" *ngIf="i!=0">
+                                                        <em class="fa fa-clipboard pointer"
+                                                            (click)="copymsg(message)"></em>
+                                                    </span>
+
+                                                </span>
+                                            </ng-container>
+
+                                        </div>
+                                        <div *ngIf="message.isUser" [ngClass]="{'user-message': message.isUser}"
+                                            class="ml-2 bg-primary white" style="padding: 0.5rem;">
+                                            <strong>{{'generics.Me' | translate }}</strong>
+                                        </div>
+                                    </div>
+                                    <span *ngIf="preparingFile">
+                                        <small class="d-block">{{'generics.Preparing to upload' | translate }}</small>
+                                        <i class="fa fa-spinner fa-spin fa-3x fa-fw info"></i>
+                                    </span>
+                                    <div class="chat-messages pt-2" *ngIf="callingOpenai" style="border-radius: 1rem;">
+                                        <span class="response-message font-small-3"
+                                            style="background-color: white !important;"
+                                            [innerHTML]="messagesExpectOutPut">
+                                        </span>
+                                        <em class="ml-1 fa fa-spinner fa-spin white fa-fw fa-2x"
+                                            style="align-self: center;"></em>
+                                    </div>
+                                    <!--<div *ngIf="callingOpenai">
+                                        <em class="fa fa-spinner fa-spin primary fa-fw"></em>
+                                    </div>-->
+                                    <span>
+                                        <div class="d-flex align-items-center input-container mt-3"
+                                            *ngIf="!callingOpenai">
+                                            <input type="text" [(ngModel)]="message" [disabled]="callingOpenai"
+                                                placeholder="{{'generics.Write a message' | translate }}..."
+                                                (keydown.enter)="sendMessage()" class="mt-0 border-0 mr-2 flex-grow-1">
+                                            <button class="mr-1 btn btn-secondary" style="padding: 0.2rem 0.57rem;"
+                                                [disabled]="callingOpenai" (click)="openFileInput(fileDropRef2)"
+                                                aria-label="new file">
+                                                <em class="fa fa-paperclip fa-rotate-180 h-4 w-auto" width="1em"
+                                                    height="1em" fill="currentColor"></em>
+                                            </button>
+                                            <input type="file" #fileDropRef2 id="fileDropRef2" multiple
+                                                style="display: none;" (change)="onFileChangePDF($event)"
+                                                accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
+                                            <button class="mr-1 btn btn-primary" style="padding: 0.2rem 0.57rem;"
+                                                [disabled]="callingOpenai" (click)="sendMessage()"
+                                                aria-label="send text">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                                    fill="currentColor" viewBox="0 0 256 256" class="h-4 w-auto">
+                                                    <path
+                                                        d="M232,127.89a16,16,0,0,1-8.18,14L55.91,237.9A16.14,16.14,0,0,1,48,240a16,16,0,0,1-15.05-21.34L60.3,138.71A4,4,0,0,1,64.09,136H136a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47H64.16a4,4,0,0,1-3.79-2.7l-27.44-80A16,16,0,0,1,55.85,18.07l168,95.89A16,16,0,0,1,232,127.89Z">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<ng-template #contentSummaryDoc id="contentSummaryDoc" let-c="close" let-d="dismiss" appendTo="body">
+    <div class="modal-header" id="idHeader">
+        <div class="content-header text-left">
+            <h4 class="mb-0">{{actualDoc.dataFile.name}}</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body content-wrapper p-2" id="idBody">
+        <div class="p-1">
+            <div>
+                <span class="animate-bottom" *ngIf="showButtonScroll" id="buttomScroll">
+                    <button type="button" class="btn btn-dark round mb-0" (click)="goToTop()">{{'summaryDx.Go top' |
+                        translate }}</button>
+                </span>
+                <div class="custom-body">
+                    <div style="text-align: justify;" [innerHTML]="actualDoc.medicalText | safe: 'html'"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #contentIntro let-c="close" let-d="dismiss" appendTo="body">
+    <a id="initcontentIntro" class="anchorSteps"></a>
+    <div class="modal-body">
+        <div class="row text-left">
+            <div class="card-body col-md-12">
+                <div class="row">
+                    <div class="col-sm-12" *ngIf="stepDisclaimer==1">
+                        <h5><strong>{{'disclaimer.t1' | translate }}</strong></h5>
+                        <p>{{'disclaimer.m1.1' | translate }}</p>
+                        <p class="mb-1"><strong>{{'disclaimer.m1.2' | translate }}</strong></p>
+                        <ul class="pl-0">
+                            <li><strong>{{'disclaimer.m1.3' | translate }}</strong> {{'disclaimer.m1.4' | translate }}
+                            </li>
+                            <li><strong>{{'disclaimer.m1.5' | translate }}</strong> {{'disclaimer.m1.6' | translate }}
+                            </li>
+                            <li><strong>{{'disclaimer.m1.7' | translate }}</strong> {{'disclaimer.m1.8' | translate }}
+                            </li>
+                        </ul>
+                        <p>{{'disclaimer.m1.9' | translate }}</p>
+                    </div>
+                    <div class="col-sm-12" *ngIf="stepDisclaimer==2">
+                        <h5><strong>{{'disclaimer.t2' | translate }}</strong></h5>
+                        <p>{{'disclaimer.m2.1' | translate }}</p>
+                        <p class="mb-0"><strong>{{'disclaimer.m2.2' | translate }}</strong></p>
+                        <p>{{'disclaimer.m2.3' | translate }}</p>
+                        <p class="mb-0"><strong>{{'disclaimer.m2.4' | translate }}</strong></p>
+                        <p>{{'disclaimer.m2.5' | translate }}</p>
+                        <p class="mb-0"><strong>{{'disclaimer.m2.6' | translate }}</strong></p>
+                        <p>{{'disclaimer.m2.7' | translate }}</p>
+                        <p class="mb-0"><strong>{{'disclaimer.m2.8' | translate }}</strong></p>
+                        <p>{{'disclaimer.m2.9' | translate }}</p>
+                        <p>{{'disclaimer.m2.10' | translate }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-actions col-md-12 center-elements">
+            <button type="button" *ngIf="stepDisclaimer>1" class="btn btn-secondary float-left"
+                (click)="prevDisclaimer();">{{'generics.Back' | translate }}</button>
+            <button type="button" *ngIf="stepDisclaimer==1" class="btn btn-primary btn-sm float-right"
+                (click)="nextDisclaimer()">{{'generics.Begin' | translate }}</button>
+            <button type="button" *ngIf="stepDisclaimer==2" class="btn btn-primary btn-sm float-right"
+                (click)="nextDisclaimer()">{{'generics.I agree' | translate }}</button>
+        </div>
+    </div>
+</ng-template>
+<button id="openModalIntro" [hidden]="true" (click)="showPanelIntro(contentIntro)">.</button>
+<ng-template #contentPhoto let-c="close" let-d="dismiss" appendTo="body">
+    <div class="modal-header" id="idHeader">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <a id="initcontentIntro" class="anchorSteps"></a>
+    <div class="modal-body">
+        <div class="row text-left">
+            <div class="card-body col-md-12">
+                <div class="row">
+                    <div class="col-sm-12" *ngIf="stepPhoto==1">
+                        <video #videoElement id="videoElement" class="w-100" autoplay></video>
+                    </div>
+                    <div class="col-sm-12" *ngIf="stepPhoto==2">
+                        <img *ngIf="capturedImage" class="w-100" [src]="capturedImage" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-actions col-md-12 center-elements">
+            <button type="button" *ngIf="stepPhoto>1" class="btn btn-secondary float-left"
+                (click)="prevCamera();">{{'demo.Repeat photo' | translate }}</button>
+            <button type="button" *ngIf="stepPhoto==1" class="btn btn-primary btn-sm float-right"
+                (click)="captureImage()">{{'demo.Capture photo' | translate }}</button>
+            <button type="button" *ngIf="stepPhoto==2" class="btn btn-primary btn-sm float-right"
+                (click)="finishPhoto()">{{'demo.I like it' | translate }}</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #contentSummaryDx id="contentSummaryDx" let-c="close" let-d="dismiss" appendTo="body">
+    <div class="modal-header" id="idHeader">
+        <div class="content-header text-left">
+            <h4 class="mb-0">{{'demo.Create report' | translate }}</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body content-wrapper p-2" id="idBody">
+        <div class="p-1">
+            <div>
+                <span class="animate-bottom" *ngIf="showButtonScroll" id="buttomScroll">
+                    <button type="button" class="btn btn-dark round mb-0" (click)="goToTop()">{{'summaryDx.Go top' |
+                        translate }}</button>
+                </span>
+                <div class="voice-recorder" *ngIf="supported" style="margin-bottom: 20px;">
+                    <div class="card-body border round p-3 mic-icon pointer bg-white" (click)="toggleRecording()">
+                        <span *ngIf="!recording" class="d-block">{{'voice.Start Voice Recognition' | translate }}</span>
+                        <i class="mt-2 fa-2x fa fa-microphone" *ngIf="!recording"></i>
+                        <span *ngIf="recording" class="d-block">{{'voice.Stop Voice Recognition' | translate }}</span>
+                        <i class="mt-2 fa-2x fa fa-stop danger" *ngIf="recording"></i>
+                        <div *ngIf="recording" class="d-block recording-indicator">
+                            <i class="fa fa-circle record-icon"></i> {{'voice.Recording' | translate }}...
+                        </div>
+                        <div *ngIf="recording" class="d-block">
+                            <p>{{ timerDisplay }}</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12 center-elements">
+                        <textarea #inputTextArea class="form-control data-hj-allow" style="height:320px;"
+                            [(ngModel)]="medicalText" name="medicalText"
+                            placeholder="{{'summaryDx.placeholder' | translate }}"></textarea>
+                            <button class="mt-2 mr-1 btn btn-sm btn-secondary" (click)="useSampleText()">{{'demo.Use example text' | translate }}</button>
+                        <button type="button" class="ml-1 mt-2 btn btn-sm btn-primary"
+                            [disabled]="callingSummary || recording || medicalText.length==0"
+                            title="{{'summaryDx.Generate summary' | translate }}" (click)="createFile();">
+                            <span>{{'demo.Create report' | translate }}</span>
+
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #contentTranslate id="contentTranslate" let-c="close" let-d="dismiss" appendTo="body">
+    <div class="modal-header" id="idHeader">
+        <div class="content-header text-left">
+            <h4 class="mb-0">{{'generics.Translate' | translate }}</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body content-wrapper p-2" id="idBody">
+       
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h5>{{'demo.Original Text' | translate }}</h5>
+                <div class="border p-2" style="min-height: 150px; max-height: 60vh;overflow-y: auto;">
+                    <span [innerHTML]="summaryPatient | safe: 'html'"></span>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="translatedText !='' ">
+                <h5>{{'demo.Translated Text' | translate }}</h5>
+                <div *ngIf="!callingTranslate" class="border p-2" style="min-height: 150px; max-height: 60vh;overflow-y: auto;">
+                    <span id="pdf-content" [innerHTML]="translatedText | safe: 'html'"></span>
+                </div>
+                <span *ngIf="!callingTranslate" class="float-right pt-2">
+                    <button class="btn btn-primary btn-sm ml-1" (click)="changeLanguage()">{{'demo.Change language' | translate }}</button>
+                    <button class="btn btn-primary btn-sm ml-1" (click)="download2()">{{'generics.ExportData' | translate }}</button>
+                </span>
+                
+            </div>
+            <div class="col-md-6" *ngIf="translatedText =='' ">
+                <div *ngIf="!callingTranslate">
+                    <div class="form-group">
+                        <label for="languageSelect">{{'demo.Select Language' | translate }}</label>
+                        <select id="languageSelect" class="form-control" [(ngModel)]="selectedLanguage">
+                            <option *ngFor="let lang of allLangs" [ngValue]="lang">
+                                {{ lang.name }} ({{ lang.nativeName }})
+                            </option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary mr-1" (click)="translateText();">{{'generics.Translate' | translate }}</button>
+                    <button type="button" class="btn btn-primary ml-1" (click)="translateTextIA();">{{'generics.Translate' | translate }} (IA)</button>
+                </div>
+                <div *ngIf="callingTranslate" class="row">
+                    <span class="col-md-12 center-elements">
+                        <em class="fa fa-spinner fa-spin fa-3x fa-fw info"></em>
+                        <p>{{'generics.Please wait' | translate }}</p>
+                    </span>
+                </div>
+              
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModalTranslate();">{{'generics.Close' | translate }}</button>
+        
+    </div>
+</ng-template>
+<ng-template #showPanelEdit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{'demo.Edit summary' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="custom-body text-left p-2" contenteditable="true" id="editableDiv">
+            <span [innerHTML]="editedContent | safe: 'html'"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">{{'generics.SaveAndClose' | translate }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelChanges(modal)">{{'generics.Cancel' | translate }}</button>
+    </div>
+</ng-template>

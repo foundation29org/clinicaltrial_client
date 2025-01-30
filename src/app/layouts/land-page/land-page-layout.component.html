@@ -1,0 +1,14 @@
+<app-navbar-dx29></app-navbar-dx29>
+<div class="wrapper" (window:resize)="onResize($event)">  
+  <div class="main-panel">
+    <div>
+      <div class="">
+          <div class="">
+              <router-outlet></router-outlet>
+          </div>
+      </div>
+      <!-- Scroll to top button -->
+    <button class="btn btn-primary scroll-top" type="button" *ngIf="isScrollTopVisible" (click)="scrollToTop();"><i class="fa fa-arrow-up"></i></button>
+    </div>
+  </div>
+</div>

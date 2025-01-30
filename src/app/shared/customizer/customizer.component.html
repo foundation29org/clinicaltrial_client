@@ -1,0 +1,38 @@
+<!-- Theme customizer Starts-->
+<div #customizer class="customizer d-none d-lg-none d-xl-block" [ngClass]="{open: isOpen}">
+  <a class="customizer-close" (click)="closeCustomizer()">
+    <i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-primary" id="customizer-toggle-icon"
+    (click)="toggleCustomizer()">
+    <i class="ft-settings font-medium-1 white align-middle"></i>
+  </a>
+  <div [perfectScrollbar] class="customizer-content p-3 ps-container ps-theme-dark"
+    data-ps-id="df6a5ce4-a175-9172-4402-dabd98fc9c0a">
+    <h4 class="text-uppercase">Theme Customizer</h4>
+    <p>Customize & Preview in Real Time</p>
+    <!-- Layout Options Starts-->
+    <div class="ct-layout">
+      <hr>
+      <h6 class="mb-3 d-flex align-items-center"><i class="ft-layout font-medium-2 mr-2"></i><span>Layout Options</span>
+      </h6>
+      <div class="layout-switch">
+        <div class="radio radio-sm d-inline-block light-layout mr-3">
+          <input id="ll-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Light'"
+            (click)="customizerService.switchLayout('light', isBgImageDisplay)">
+          <label for="ll-switch">Light</label>
+        </div>
+        <div class="radio radio-sm d-inline-block dark-layout mr-3">
+          <input id="dl-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Dark'"
+            (click)="customizerService.switchLayout('dark', isBgImageDisplay)">
+          <label for="dl-switch">Dark</label>
+        </div>
+        <div class="radio radio-sm d-inline-block transparent-layout">
+          <input id="tl-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Transparent'"
+            (click)="customizerService.switchLayout('transparent', isBgImageDisplay)">
+          <label for="tl-switch">Transparent</label>
+        </div>
+      </div>
+      <!-- Layout Options Ends-->
+    </div>
+  </div>
+</div>
+<!-- Theme customizer Ends-->
