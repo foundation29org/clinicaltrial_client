@@ -1,9 +1,12 @@
 {
    "demo":{
-      "t1": "O que é o GeneWise?",
-      "des": "GeneWise é uma prova de conceito desenvolvida pela Fundación 29. Ela demonstra como a IA generativa pode explicar a informação genética de uma forma clara e compreensível para os pacientes e suas famílias.",
+      "t1": "O que é o TrialMatch?",
+      "des": "TrialMatch é uma prova de conceito desenvolvida pela Fundación 29, aproveitando o potencial dos LLMs para simplificar a busca por ensaios clínicos disponíveis. Ele analisa relatórios médicos e conecta pacientes a ensaios relevantes, tornando o processo mais rápido e acessível para todos. Esta iniciativa tem o potencial de se beneficiar e se alinhar com os objetivos do projeto europeu READI.",
       "What do you want to do?":"O que você quer fazer?",
       "Summarize genetic reports": "Resumir relatórios genéticos",
+      "Clinical trials": "Ensaios clínicos",
+      "Who can participate in the study?": "Quem pode participar do estudo?",
+      "Who cannot participate in the study?": "Quem não pode participar do estudo?",
       "Summarize a medical conversation": "Resumir uma conversa",
       "Find a diagnosis": "Encontre um diagnóstico",
       "How do you want to start?": "Como você quer começar?",
@@ -233,8 +236,8 @@
     "AdditionalInformation": "Informação adicional"
    },
    "disclaimer":{
-      "t1": "Bem-vindo ao GeneWise, seu assistente de informação genética",
-      "m1.1": "GeneWise foi projetado para simplificar sua vida, fornecendo explicações claras e compreensíveis sobre informações genéticas para pacientes e suas famílias. Economize tempo e esforço na compreensão de informações genéticas complexas e concentre-se no que é mais importante!",
+      "t1": "Bem-vindo ao TrialMatch, seu assistente de informação genética",
+      "m1.1": "TrialMatch foi projetado para simplificar sua vida, fornecendo explicações claras e compreensíveis sobre informações genéticas para pacientes e suas famílias. Economize tempo e esforço na compreensão de informações genéticas complexas e concentre-se no que é mais importante!",
       "m1.2": "Como funciona?",
       "m1.3": "1. Envie seu relatório ou cole seu texto:",
       "m1.4": "Basta fazer o upload do laudo genético ou colar o texto relacionado à doença e histórico familiar que deseja que lhe expliquemos.",
@@ -242,9 +245,9 @@
       "m1.6": "Com um único clique, nossa ferramenta criará uma explicação detalhada e estruturada, destacando informações importantes para um entendimento rápido e eficiente.",
       "m1.7": "3. Avaliar e melhorar:",
       "m1.8": "Sua opinião é valiosa. Após analisar a explicação, convidamos você a fornecer feedback sobre a usabilidade, clareza e qualidade das informações geradas. Ajude-nos a melhorar e ajustar às suas necessidades!",
-      "m1.9": "Carregue seu primeiro relatório ou cole seu texto e descubra a facilidade de entender informações genéticas com GeneWise.",
-     "t2": "Privacidade e gerenciamento de dados em GeneWise",
-     "m2.1": "Na GeneWise, valorizamos e protegemos a sua privacidade. Aderimos aos regulamentos mais rígidos, incluindo o Regulamento Geral de Proteção de Dados (GDPR), para garantir que suas informações estejam seguras e seus direitos respeitados.",
+      "m1.9": "Carregue seu primeiro relatório ou cole seu texto e descubra a facilidade de entender informações genéticas com TrialMatch.",
+     "t2": "Privacidade e gerenciamento de dados em TrialMatch",
+     "m2.1": "Na TrialMatch, valorizamos e protegemos a sua privacidade. Aderimos aos regulamentos mais rígidos, incluindo o Regulamento Geral de Proteção de Dados (GDPR), para garantir que suas informações estejam seguras e seus direitos respeitados.",
      "m2.2": "Nosso compromisso com a privacidade:",
      "m2.3": "Não armazenamos o seu Relatório: Depois de enviar um relatório médico para resumo, queremos que você saiba que não armazenamos o texto do relatório ou qualquer informação pessoal relacionada a ele. Usamos o relatório exclusivamente para gerar o resumo e, feito isso, os dados do relatório são imediatamente excluídos de nossos servidores.",
      "m2.4": "Feedback e detalhes de contato:",

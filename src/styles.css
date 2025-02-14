@@ -84,6 +84,7 @@ input{
 
 .card, .form-control, form label {
   font-size: 1rem;
+  margin: -5px 0;
 }
 
 

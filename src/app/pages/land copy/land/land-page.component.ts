@@ -47,7 +47,11 @@ declare let html2canvas: any;
     ])
   ]
 })
+
+
+
 export class LandPageComponent implements OnInit, OnDestroy  {
+
   private subscription: Subscription = new Subscription();
   loadedDocs: boolean = false;
   step: number = 1;
@@ -120,47 +124,6 @@ export class LandPageComponent implements OnInit, OnDestroy  {
   initialized = false;
   @ViewChild('showPanelEdit') showPanelEdit: TemplateRef<any>;
   @ViewChild('editableDiv') editableDiv: ElementRef;
-
-  clinicalTrials: any[] = []; // para que la variable sea legible para el ngIf
-  selectedTrial: any = {}; // para guardar el trial seleccionado en el modal
-
-  statusColors = {
-    'NOT_YET_RECRUITING': '#BCEBCB', // Verde flojo
-    'RECRUITING': '#BCEBCB',         // Verde flojo
-    'COMPLETED': '#ffa1a2',          // Rojo ligero
-    'UNKNOWN' : '#c0c6cf'            // Gris claro
-  };
-
-  filters = {
-    status: '',
-    condition: ''
-  };
-
-  get filteredTrials(): any[] {
-    if (!this.clinicalTrials) {
-      return [];
-    }
-
-    return this.clinicalTrials.filter(trial => {
-      // Filtro por estado del ensayo (OverallStatus)
-      const matchStatus = !this.filters.status 
-                          || trial.OverallStatus === this.filters.status;
-
-      // Filtro por Condition (búsqueda parcial, ignorando mayúsculas)
-      const matchCondition = !this.filters.condition 
-        || (trial.Condition && trial.Condition.toLowerCase()
-                                   .includes(this.filters.condition.toLowerCase()));
-
-      return matchStatus && matchCondition;
-    });
-  }
-
-  clearFilters(): void {
-    this.filters.status = '';
-    this.filters.condition = '';
-  }
- 
-
   langDict = {
     "af": null,
     "sq": null,
@@ -289,23 +252,6 @@ export class LandPageComponent implements OnInit, OnDestroy  {
     this.subscription.unsubscribe();
     if (this.modalService) {
       this.modalService.dismissAll();
-    }
-  }
-
-  openTrialInfo(trial: any, contentTrial: any) { // abre el modal con la información del trial
-    console.log('Trial object structure:', JSON.stringify(trial, null, 2));
-    this.selectedTrial = trial;
-    const options: NgbModalOptions = {
-      backdrop: 'static',
-      keyboard: false,
-      windowClass: 'ModalClass-md'
-    };
-    this.modalReference = this.modalService.open(contentTrial, options);
-  }
-
-  closeModalTrial() { // cierra el modal de trial
-    if (this.modalReference) {
-      this.modalReference.close();
     }
   }
 
@@ -678,19 +624,9 @@ showForm() {
 
   sendFile(formData, index) {
     this.submitted = true;
-    this.clinicalTrials = [];  // we clear the array from previous searches
     this.subscription.add(this.http.post(environment.api + '/api/callTrialMatcher', formData)
       .subscribe((res: any) => {
         console.log(res)
-        if (res.clinicalTrials.length > 0) {
-          // Mapear los ensayos clínicos y agregar las propiedades necesarias
-          this.clinicalTrials = res.clinicalTrials.map(trial => ({
-            ...trial,
-            showCriteria: false,
-            isLoadingCriteria: false,
-            structuredCriteria: null
-          }));
-        }
         if(res.status!=200){
           this.docs[index].state = 'failed';
         }else{
@@ -1957,44 +1893,4 @@ async translateInverseSummary(msg): Promise<string> {
       this.editedContent = this.originalContent;
       modal.close();
     }
-
-    toggleCriteria(trial: any) {
-      // Alternar la visibilidad
-      trial.showCriteria = !trial.showCriteria;
-    
-      // Sólo si lo vamos a "abrir" y aún no hay structuredCriteria cargado,
-      // hacemos la llamada al backend.
-      if (trial.showCriteria && !trial.structuredCriteria) {
-        trial.isLoadingCriteria = true; // Indicamos que comienza la carga
-
-        const body = {
-          text: trial.ParticipationCriteria,
-          language: this.detectedLang || 'en'  // El idioma que corresponda
-        };
-
-        this.http.post(environment.api + '/api/trialEligibility', body)
-          .subscribe(
-            (res: any) => {
-              // Filtramos por si vienen strings vacíos
-              const inc = Array.isArray(res.inclusion) ? res.inclusion.filter((c: string) => c.trim().length > 0) : [];
-              const exc = Array.isArray(res.exclusion) ? res.exclusion.filter((c: string) => c.trim().length > 0) : [];
-
-              trial.structuredCriteria = {
-                inclusion: inc,
-                exclusion: exc
-              };
-            },
-            (err) => {
-              console.error('Error al obtener criterios', err);
-              // Podrías notificar un error al usuario o hacer un fallback
-            },
-            () => {
-              // Cuando finaliza la llamada (ya sea OK o error),
-              // marcamos como finalizada la carga
-              trial.isLoadingCriteria = false;
-            }
-          );
-      }
-    }
 }
-

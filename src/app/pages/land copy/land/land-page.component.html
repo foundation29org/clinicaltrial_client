@@ -54,20 +54,10 @@
             <div *ngIf="loadedDocs">
 
                 <div class="mt-4 col-md-12">
-                    <div class="col-md-12 mb-3">
-                        <div class="row">
-                            <div class="col-md-5 text-end pe-4">
-                                <buttom class="buttomback2 mb-2 btn btn-sm btn-primary text-bold-700" (click)="backmode0()">{{'demo.New patient' | translate }}</buttom>
-                            </div>
-                            <div class="col-md-5 text-start">
-                                <h4 (click)="showModeGod()">
-                                    {{'demo.Clinical trials' | translate }}
-                                    <span class="small">
-                                        [{{filteredTrials.length}}]
-                                    </span>
-                                </h4>
-                            </div>
-                        </div>
+                    <div class="col-md-12 mb-3 center-elements">
+                        <buttom class="buttomback2 mb-2 btn btn-sm btn-primary text-bold-700" (click)="backmode0()">{{'demo.New patient' | translate }}</buttom>
+                        <h4 (click)="showModeGod()">{{'demo.Summarize genetic reports' |
+                            translate }}</h4>
                     </div>
                     <div class="row">
                         <div class="col-lg-5">
@@ -225,179 +215,143 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-7" *ngIf="clinicalTrials.length > 0">
-                            <div class="filters-container d-flex flex-wrap gap-2 mb-3">
-                                <!-- Filtrar por estado (OverallStatus) -->
-                                <label for="statusFilter">Estado:</label>
-                                <select id="statusFilter" 
-                                        [(ngModel)]="filters.status" 
-                                        class="form-control form-control-sm" 
-                                        style="max-width:200px;">
-                                    <option value="">Todos</option>
-                                    <option value="RECRUITING">Recruiting</option>
-                                    <option value="NOT_YET_RECRUITING">Not yet recruiting</option>
-                                    <option value="COMPLETED">Completed</option>
-                                    <option value="UNKNOWN">Unknown</option>
-                                </select>
-                            
-                                <!-- Filtrar por Condition (coincidencia parcial en trial.Condition) -->
-                                <label for="conditionFilter">Condition:</label>
-                                <input id="conditionFilter" 
-                                       type="text"
-                                       [(ngModel)]="filters.condition" 
-                                       placeholder="Buscar condition..." 
-                                       class="form-control form-control-sm"
-                                       style="max-width:200px;"/>
-                            
-                                <!-- Botón para limpiar/resetear filtros -->
-                                <button class="btn btn-secondary btn-sm" (click)="clearFilters()">
-                                    Limpiar filtros
-                                </button>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 mb-3" *ngFor="let trial of filteredTrials">
-                                    <div class="card">
-                                        <!-- COLOR BAR -->
-                                        <div class="status-strip"
-                                            [style.backgroundColor]="statusColors[trial.OverallStatus]">
-                                            <div class="d-flex align-items-center justify-content-between w-100">
-                                                <div class="fw-bold ms-2">
-                                                    <a href="https://clinicaltrials.gov/study/{{trial.NCTId}}" 
-                                                       target="_blank" 
-                                                       class="trial-title-link">
-                                                       {{trial.BriefTitle}}
-                                                    </a>
-                                                </div>
-                                                <div class="d-flex align-items-center px-2">
-                                                    <button class="info-circle"
-                                                            (click)="openTrialInfo(trial, contentTrial)"
-                                                            title="{{ 'generics.Information' | translate }}">
-                                                        i
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-body p-2" style="margin-bottom: 0;">
-                                            <p class="mb-0">
-                                                <strong>Condition:</strong> {{trial.Condition || 'N/A'}}
-                                            </p>
-                                            <p class="mb-0">
-                                                <strong>Treatment:</strong> {{trial.InterventionName || 'N/A'}}
-                                            </p>
-                                        </div>
-
-                                        <div class="card-body p-2" style="border-top: 1px solid #eee;">
-                                            <p class="mb-0">
-                                                <strong>Location ({{trial.Locations?.length || 0}}):</strong> 
-                                                <span *ngIf="trial.Locations?.length">
-                                                    <span *ngFor="let location of trial.Locations; let last = last">
-                                                        {{location.facility || location.name || location}}{{!last ? ', ' : ''}}
-                                                        <span *ngIf="location.city">({{location.city}})</span>
-                                                        <span *ngIf="location.country">({{location.country}})</span>
-                                                    </span>
-                                                </span>
-                                                <span *ngIf="!trial.Locations?.length">N/A</span>
-                                            </p>
-                                        </div>
-
-                                        <div class="card-footer pointer pt-2 pb-2" 
-                                             (click)="toggleCriteria(trial)"
-                                             style="border-top: 1px solid #eee;">
-                                            <div class="d-flex align-items-center">
-                                                <!-- Arrow icon with loading state -->
-                                                <i class="arrow-icon"
-                                                   [ngClass]="{
-                                                      'rotated': trial.showCriteria
-                                                    }">
-                                                </i>
-                                                <span class="ms-2">
-                                                    {{ trial.showCriteria ? 'Ocultar criterios' : 'Mostrar criterios' }}
-                                                </span>
-                                            </div>
-
-                                            <!-- Loading spinner -->
-                                            <div *ngIf="trial.isLoadingCriteria" class="mt-2 loading-indicator">
-                                                <em class="fa fa-spinner fa-spin"></em>
-                                            </div>
-
-                                            <!-- Criteria content - only show when not loading and criteria should be visible -->
-                                            <div *ngIf="trial.showCriteria && !trial.isLoadingCriteria" class="mt-2 criteria-container">
-                                                <!-- Who can participate section -->
-                                                <div *ngIf="trial.structuredCriteria?.inclusion?.length > 0">
-                                                    <div class="criteria-section-title">
-                                                        {{ 'demo.Who can participate in the study?' | translate }}
-                                                    </div>
-                                                    <div *ngFor="let inc of trial.structuredCriteria.inclusion" class="row criteria-row align-items-center">
-                                                        <div class="col-auto icon-column">✔️</div>
-                                                        <div class="col criteria-text">{{ inc }}</div>
-                                                        <div class="col-auto d-flex align-items-center gap-2 criteria-checkboxes">
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">✔️</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">❌</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">?</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Who cannot participate section -->
-                                                <div *ngIf="trial.structuredCriteria?.exclusion?.length > 0">
-                                                    <div class="criteria-section-title">
-                                                        {{ 'demo.Who cannot participate in the study?' | translate }}
-                                                    </div>
-                                                    <div *ngFor="let exc of trial.structuredCriteria.exclusion" class="row criteria-row align-items-center">
-                                                        <div class="col-auto icon-column">❌</div>
-                                                        <div class="col criteria-text">{{ exc }}</div>
-                                                        <div class="col-auto d-flex align-items-center gap-2 criteria-checkboxes">
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">✔️</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">❌</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">?</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                        <div class="col-lg-7" *ngIf="docs.length>0">
+                            <div class="card card-body">
+                                <div class="row" *ngIf="callingSummary">
+                                    <div class="col-md-12">
+                                        <span class="d-block mt-2 center-elements"><em
+                                                class="fa fa-spinner fa-spin fa-3x fa-fw info"></em></span>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="!callingSummary && summaryPatient==''">
+                                    <div class="col-md-12">
+                                        <p class="text-bold-700 text-center">{{'demo.I want a summary for' | translate
+                                            }}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="center-elements">
+                                            <button class="mb-2 btn btn-primary btn-sm ml-1"
+                                                    (click)="madeSummary('adult')">
+                                                    {{ 'demo.Adults' | translate }}
+                                                </button>
+                                                <button class="mb-2 btn btn-primary btn-sm ml-1"
+                                                    (click)="madeSummary('adolescent')">
+                                                    {{ 'demo.Adolescents' | translate }}
+                                                </button>
+                                                <button class="mb-2 btn btn-primary btn-sm ml-1"
+                                                    (click)="madeSummary('child')">
+                                                    {{ 'demo.Children' | translate }}
+                                                </button>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row" *ngIf="!callingSummary && summaryPatient!=''">
+                                    <div class="center-elements">
+                                        <div class="d-block mt-2">
+                                            <div class="center-elements">
+                                                <button class="btn btn-primary btn-sm mr-1"
+                                                    (click)="newSummary()">{{'demo.New summary' | translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1 mr-1"
+                                                    (click)="openFeedback()" target="_blank">{{'demo.Evaluate summary' |
+                                                    translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1 mr-1" (click)="showPanelTranslate(contentTranslate)">{{'generics.Translate' | translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1 mr-1" (click)="toggleEdit(showPanelEdit)">{{'generics.Edit' | translate }}</button>
+                                                <button class="btn btn-primary btn-sm ml-1"
+                                                (click)="download()">{{'generics.ExportData' | translate }}</button>
+                                            </div>
+                                            <div class="custom-body text-left p-2">
+                                                <span [innerHTML]="summaryPatient | safe: 'html'"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div *ngIf="timeline.length>0 && !callingSummary" class="col-md-12">
+                                        <h4>{{'timeline.Timeline' | translate }}</h4>
+                                        <button class="btn btn-primary d-md-none mb-2" (click)="toggleFilters()">
+                                            <span *ngIf="!showFilters">{{'timeline.Show filters' | translate }}</span>
+                                            <span *ngIf="showFilters">{{'timeline.Hide filters' | translate }}</span>
+                                        </button>
+                                        <div class="row"
+                                            [ngClass]="{'d-none d-md-flex': !showFilters, 'd-block-inline': showFilters}">
+                                            <div class="col-md-12">{{'timeline.Filter by' | translate }}</div>
+                                            <div class="col-md-4 aligself-start">
+                                                <mat-form-field>
+                                                    <mat-label>{{'timeline.Start date' | translate }}</mat-label>
+                                                    <input readonly matInput [matDatepicker]="picker"
+                                                        [(ngModel)]="startDate" (dateChange)="filterEvents()"
+                                                        (click)="picker.open()">
+                                                    <button *ngIf="startDate!=null" matSuffix mat-icon-button
+                                                        aria-label="Clear" (click)="resetStartDate(null)"
+                                                        style="position: absolute; left: 30px;">
+                                                        <em class="fa fa-trash danger"></em>
+                                                    </button>
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-4 aligself-start">
+                                                <mat-form-field>
+                                                    <mat-label>{{'timeline.End date' | translate }}</mat-label>
+                                                    <input readonly matInput [matDatepicker]="picker2"
+                                                        [(ngModel)]="endDate" (dateChange)="filterEvents()"
+                                                        (click)="picker2.open()">
+                                                    <button *ngIf="endDate!=null" matSuffix mat-icon-button
+                                                        aria-label="Clear" (click)="resetEndDate(null)"
+                                                        style="position: absolute; left: 30px;">
+                                                        <em class="fa fa-trash danger"></em>
+                                                    </button>
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker2"></mat-datepicker-toggle>
+                                                    <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-4 aligself-start">
+                                                <mat-form-field>
+                                                    <mat-label>{{'timeline.Event type' | translate }}</mat-label>
+                                                    <mat-select [(ngModel)]="selectedEventType"
+                                                        (selectionChange)="filterEvents()">
+                                                        <mat-option [value]="null">{{'timeline.All Event Types' |
+                                                            translate }}</mat-option>
+                                                        <mat-option value="diagnosis">{{'timeline.Diagnoses' | translate
+                                                            }} 🩺</mat-option>
+                                                        <mat-option value="treatment">{{'timeline.Treatment' | translate
+                                                            }} 💊</mat-option>
+                                                        <mat-option value="test">{{'timeline.Tests' | translate }}
+                                                            🔬</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="timeline" *ngIf="groupedEvents.length>0">
+                                            <span class="pointer" (click)="toggleEventOrder()"
+                                                style="text-decoration: underline !important;color: #b30000;">
+                                                {{'generics.Sort' | translate }} <em class="fa"
+                                                    [class.fa-arrow-down]="!isOldestFirst"
+                                                    [class.fa-arrow-up]="isOldestFirst"></em>
+                                            </span>
+                                            <div *ngFor="let group of groupedEvents">
+                                                <div class="timeline-month-title">{{ group.monthYear | date: 'MMMM y' :
+                                                    '' : lang }}</div>
+                                                <div class="timeline-item" *ngFor="let event of group.events">
+                                                    <div class="timeline-dot"></div>
+                                                    <div class="timeline-content">
+                                                        <span>{{ event.date | date }}</span>
+                                                        <p>
+                                                            <span *ngIf="event.eventType == 'diagnosis'">🩺 </span>
+                                                            <span *ngIf="event.eventType == 'treatment'">💊 </span>
+                                                            <span *ngIf="event.eventType == 'test'">🔬 </span>
+                                                            {{ event.keyGeneticEvent }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="groupedEvents.length==0">
+                                            <p>{{'timeline.There are no events' | translate }}</p>
+                                        </div>
+                                    </div>-->
+                                </div>
                             </div>
-                        </div>
-
-                        <ng-template #contentTrial let-c="close" let-d="dismiss" appendTo="body">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Clinical Trial - {{ selectedTrial?.NCTId }}</h5>
-                                <button type="button" class="close" aria-label="Close" (click)="closeModalTrial()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Title:</strong> {{selectedTrial?.BriefTitle || 'N/A'}}</p>
-                                <p><strong>Organization:</strong> {{selectedTrial?.Organization || 'N/A'}}</p>
-                                <p><strong>Status:</strong> {{selectedTrial?.OverallStatus || 'N/A'}}</p>
-                                <p><strong>Summary:</strong> {{selectedTrial?.BriefSummary || 'N/A'}}</p>
-                                <p><strong>Condition:</strong> {{selectedTrial?.Condition || 'N/A'}}</p>
-                                <p><strong>Intervention:</strong> {{selectedTrial?.InterventionName || 'N/A'}}</p>
-                                <p><strong>Locations:</strong> {{ selectedTrial?.Locations?.length ? (selectedTrial.Locations | json) : 'N/A' }}</p>
-                                <p><strong>Participation Criteria:</strong> {{ selectedTrial?.ParticipationCriteria || 'N/A' }}</p>
-                            </div>
-                        </ng-template>
-                      
 
 
                         </div>
@@ -480,16 +434,20 @@
                                                 </svg>
                                             </button>
                                         </div>
+
                                     </span>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
+</div>
 
 
 <ng-template #contentSummaryDoc id="contentSummaryDoc" let-c="close" let-d="dismiss" appendTo="body">
