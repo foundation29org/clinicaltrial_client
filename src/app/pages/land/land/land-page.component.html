@@ -289,13 +289,13 @@
 
                                         <div class="card-body p-2" style="border-top: 1px solid #eee;">
                                             <p class="mb-0">
-                                                <strong>Location ({{trial.Locations?.length || 0}}):</strong> 
+                                                <strong>Locations ({{getUniqueLocations(trial.Locations)?.length || 0}}):</strong> 
                                                 <span *ngIf="trial.Locations?.length">
-                                                    <span *ngFor="let location of trial.Locations; let last = last">
-                                                        {{location.facility || location.name || location}}{{!last ? ', ' : ''}}
+                                                    <div *ngFor="let location of getUniqueLocations(trial.Locations); let last = last">
+                                                        {{location.facility || location.name || location}}
                                                         <span *ngIf="location.city">({{location.city}})</span>
                                                         <span *ngIf="location.country">({{location.country}})</span>
-                                                    </span>
+                                                    </div>
                                                 </span>
                                                 <span *ngIf="!trial.Locations?.length">N/A</span>
                                             </p>

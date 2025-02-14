@@ -136,11 +136,25 @@ export class LandPageComponent implements OnInit, OnDestroy  {
     condition: ''
   };
 
+  getUniqueLocations(locations: any[]): any[] {
+    if (!locations) return [];
+    
+    const uniqueLocations = locations.reduce((acc, location) => {
+      const locationKey = `${location.facility}-${location.city}-${location.country}`;
+      if (!acc.some(l => `${l.facility}-${l.city}-${l.country}` === locationKey)) {
+        acc.push(location);
+      }
+      return acc;
+    }, []);
+  
+    return uniqueLocations;
+  }
+  
   get filteredTrials(): any[] {
     if (!this.clinicalTrials) {
       return [];
     }
-
+    console.log(this.clinicalTrials)
     return this.clinicalTrials.filter(trial => {
       // Filtro por estado del ensayo (OverallStatus)
       const matchStatus = !this.filters.status 
@@ -150,6 +164,7 @@ export class LandPageComponent implements OnInit, OnDestroy  {
       const matchCondition = !this.filters.condition 
         || (trial.Condition && trial.Condition.toLowerCase()
                                    .includes(this.filters.condition.toLowerCase()));
+                                   
 
       return matchStatus && matchCondition;
     });
