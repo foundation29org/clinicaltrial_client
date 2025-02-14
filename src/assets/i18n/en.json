@@ -1,9 +1,12 @@
 {
   "demo":{
-    "t1": "What is GeneWise?",
-    "des": "GeneWise is a proof of concept developed by Fundación 29. It demonstrates how generative AI can explain genetic information in a clear and understandable way for patients and their families.",
+    "t1": "What is TrialMatch?",
+    "des": "TrialMatch is a proof of concept developed by Fundación 29, leveraging the potential of LLMs to simplify the search for available clinical trials. It analyzes medical reports and matches patients with relevant trials, making the process faster and more accessible for everyone. This initiative has the potential to benefit from and align with the goals of the European READI project",
     "What do you want to do?": "What do you want to do?",
     "Summarize genetic reports": "Summarize genetic reports",
+    "Clinical trials": "Clinical trials",
+    "Who can participate in the study?": "Who can participate in the study?",
+    "Who cannot participate in the study?": "Who cannot participate in the study?",
     "Summarize a medical conversation": "Summarize a medical conversation",
     "Find a diagnosis": "Find a diagnosis",
     "How do you want to start?": "How do you want to start?",
@@ -233,8 +236,8 @@
     "AdditionalInformation": "Additional information"
    },
    "disclaimer":{
-    "t1": "Welcome to GeneWise, your genetic information assistant",
-    "m1.1": "GeneWise is designed to simplify your life by providing clear and understandable explanations of genetic information for patients and their families. Save time and effort understanding complex genetic information and focus on what matters most!",
+    "t1": "Welcome to TrialMatch, your genetic information assistant",
+    "m1.1": "TrialMatch is designed to simplify your life by providing clear and understandable explanations of genetic information for patients and their families. Save time and effort understanding complex genetic information and focus on what matters most!",
     "m1.2": "How does it work?",
     "m1.3": "1. Upload your report or paste your text:",
     "m1.4": "You just have to upload the genetic report or paste the text related to the disease and family history that you want us to explain to you.",
@@ -242,9 +245,9 @@
     "m1.6": "With a single click, our tool will create a detailed and structured explanation, highlighting key information for quick and efficient understanding.",
     "m1.7": "3. Evaluate and improve:",
     "m1.8": "Your opinion is valuable. After reviewing the explanation, we invite you to provide feedback on the usability, clarity and quality of the information generated. Help us improve and adjust to your needs!",
-    "m1.9": "Upload your first report or paste your text and discover the ease of understanding genetic information with GeneWise.",
-     "t2": "Privacy and data management at GeneWise",
-     "m2.1": "At GeneWise, we value and protect your privacy. We adhere to the strictest regulations, including the General Data Protection Regulation (GDPR), to ensure that your information is secure and your rights respected.",
+    "m1.9": "Upload your first report or paste your text and discover the ease of understanding genetic information with TrialMatch.",
+     "t2": "Privacy and data management at TrialMatch",
+     "m2.1": "At TrialMatch, we value and protect your privacy. We adhere to the strictest regulations, including the General Data Protection Regulation (GDPR), to ensure that your information is secure and your rights respected.",
      "m2.2": "Our commitment to privacy:",
      "m2.3": "We do not store your Report: Once you upload a medical report for summary, we want you to know that we do not store the text of the report or any personal information related to it. We use the report exclusively to generate the summary and, Once this is done, the report data is immediately deleted from our servers.",
      "m2.4": "Feedback and contact details:",

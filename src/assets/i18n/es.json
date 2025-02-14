@@ -1,9 +1,12 @@
 {
   "demo":{
-    "t1": "¿Qué es GeneWise?",
-    "des": "GeneWise es una prueba de concepto desarrollada por Fundación 29. Demuestra cómo la IA generativa puede explicar información genética de manera clara y entendible para pacientes y sus familias.",
+    "t1": "¿Qué es TrialMatch?",
+    "des": "TrialMatch es una prueba de concepto desarrollada por Fundación 29, aprovechando el potencial de los LLM para simplificar la búsqueda de ensayos clínicos disponibles. Analiza informes médicos y empareja a los pacientes con ensayos relevantes, haciendo el proceso más rápido y accesible para todos. Esta iniciativa tiene el potencial de beneficiarse y alinearse con los objetivos del proyecto europeo READI.",
     "What do you want to do?": "¿Qué quiere hacer?",
     "Summarize genetic reports": "Resumir informes genéticos",
+    "Clinical trials": "Ensayos clínicos",
+    "Who can participate in the study?": "¿Quién puede participar en el estudio?",
+    "Who cannot participate in the study?": "¿Quién no puede participar en el estudio?",
     "Summarize a medical conversation": "Resumir una conversación médica",
     "Find a diagnosis": "Buscar un diagnóstico",
     "How do you want to start?": "¿Cómo quieres empezar?",
@@ -233,8 +236,8 @@
     "AdditionalInformation": "Información adicional"
   },
   "disclaimer":{
-    "t1": "Bienvenido a GeneWise, tu asistente de información genética",
-    "m1.1": "GeneWise está diseñado para simplificar tu vida, proporcionando explicaciones claras y entendibles sobre información genética para pacientes y sus familias. ¡Ahorra tiempo y esfuerzo al comprender información genética compleja y enfócate en lo más importante!",
+    "t1": "Bienvenido a TrialMatch, tu asistente de información genética",
+    "m1.1": "TrialMatch está diseñado para simplificar tu vida, proporcionando explicaciones claras y entendibles sobre información genética para pacientes y sus familias. ¡Ahorra tiempo y esfuerzo al comprender información genética compleja y enfócate en lo más importante!",
     "m1.2": "¿Cómo funciona?",
     "m1.3": "1. Sube tu informe o pega tu texto:",
     "m1.4": "Solo tienes que cargar el informe genético o pegar el texto relacionado con la enfermedad y los antecedentes familiares que deseas que te expliquemos.",
@@ -242,9 +245,9 @@
     "m1.6": "Con un solo clic, nuestra herramienta creará una explicación detallada y estructurada, destacando la información clave para una comprensión rápida y eficiente.",
     "m1.7": "3. Evalúa y mejora:",
     "m1.8": "Tu opinión es valiosa. Después de revisar la explicación, te invitamos a proporcionar feedback sobre la usabilidad, la claridad y la calidad de la información generada. ¡Ayúdanos a mejorar y ajustarnos a tus necesidades!",
-    "m1.9": "Carga tu primer informe o pega tu texto y descubre la facilidad de comprender información genética con GeneWise.",
-    "t2": "Privacidad y gestión de datos en GeneWise",
-    "m2.1": "En GeneWise, valoramos y protegemos tu privacidad. Nos regimos por las normativas más estrictas, incluido el Reglamento General de Protección de Datos (GDPR), para asegurar que tu información esté segura y tus derechos respetados.",
+    "m1.9": "Carga tu primer informe o pega tu texto y descubre la facilidad de comprender información genética con TrialMatch.",
+    "t2": "Privacidad y gestión de datos en TrialMatch",
+    "m2.1": "En TrialMatch, valoramos y protegemos tu privacidad. Nos regimos por las normativas más estrictas, incluido el Reglamento General de Protección de Datos (GDPR), para asegurar que tu información esté segura y tus derechos respetados.",
     "m2.2": "Nuestro compromiso con la privacidad:",
     "m2.3": "No guardamos tu Informe: Una vez subes un informe médico para su resumen, queremos que sepas que no almacenamos el texto del informe ni ninguna información personal relacionada con él. Utilizamos el informe exclusivamente para generar el resumen y, una vez hecho esto, los datos del informe se eliminan inmediatamente de nuestros servidores.",
     "m2.4": "Feedback y datos de contacto:",

@@ -196,7 +196,7 @@ export class jsPDFService {
         }
     
         const date = this.getDate();
-        doc.save('Genewise_Report_' + date + '.pdf');
+        doc.save('TrialMatch_Report_' + date + '.pdf');
     }
 
     private async generateImagesFromHTML(element: HTMLElement, pageWidth: number, pageHeight: number): Promise<string[]> {
@@ -303,7 +303,7 @@ export class jsPDFService {
         }
     
         var date = this.getDate();
-        doc.save('Genewise_Report_' + date + '.pdf');
+        doc.save('TrialMatch_Report_' + date + '.pdf');
     }
 
     // Procesar un elemento HTML y añadirlo al PDF
