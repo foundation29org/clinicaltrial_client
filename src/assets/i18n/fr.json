@@ -1,7 +1,7 @@
 {
    "demo":{
-      "t1" : "Qu'est-ce que TrialMatch?",
-      "des" : "TrialMatch est une preuve de concept développée par Fundación 29, exploitant le potentiel des LLM pour simplifier la recherche d'essais cliniques disponibles. Il analyse les rapports médicaux et met en relation les patients avec des essais pertinents, rendant le processus plus rapide et accessible à tous. Cette initiative pourrait bénéficier et s'aligner avec les objectifs du projet européen READI.",
+      "t1" : "Qu'est-ce que TrialGPT?",
+      "des" : "TrialGPT est une preuve de concept développée par Fundación 29, exploitant le potentiel des LLM pour simplifier la recherche d'essais cliniques disponibles. Il analyse les rapports médicaux et met en relation les patients avec des essais pertinents, rendant le processus plus rapide et accessible à tous. Cette initiative pourrait bénéficier et s'aligner avec les objectifs du projet européen READI.",
       "What do you want to do?": "Que voulez-vous faire ?",
       "Summarize genetic reports": "Résumer des rapports génétiques",
       "Clinical trials": "Essais cliniques",
@@ -236,8 +236,8 @@
     "AdditionalInformation": "Informations supplémentaires"
    },
    "disclaimer":{
-      "t1": "Bienvenue dans TrialMatch, votre assistant d'informations génétiques",
-      "m1.1": "TrialMatch est conçu pour vous simplifier la vie en fournissant des explications claires et compréhensibles sur les informations génétiques aux patients et à leurs familles. Gagnez du temps et des efforts en comprenant des informations génétiques complexes et concentrez-vous sur ce qui compte le plus !",
+      "t1": "Bienvenue dans TrialGPT, votre assistant d'informations génétiques",
+      "m1.1": "TrialGPT est conçu pour vous simplifier la vie en fournissant des explications claires et compréhensibles sur les informations génétiques aux patients et à leurs familles. Gagnez du temps et des efforts en comprenant des informations génétiques complexes et concentrez-vous sur ce qui compte le plus !",
       "m1.2": "Comment ça marche ?",
       "m1.3": "1. Téléchargez votre rapport ou collez votre texte :",
       "m1.4": "Il vous suffit de télécharger le rapport génétique ou de coller le texte relatif à la maladie et aux antécédents familiaux que vous souhaitez que nous vous expliquions.",
@@ -245,9 +245,9 @@
       "m1.6": "D'un simple clic, notre outil créera une explication détaillée et structurée, mettant en avant les informations clés pour une compréhension rapide et efficace.",
       "m1.7": "3. Évaluer et améliorer :",
       "m1.8": "Votre avis est précieux. Après avoir examiné l'explication, nous vous invitons à nous faire part de vos commentaires sur la convivialité, la clarté et la qualité des informations générées. Aidez-nous à nous améliorer et à nous adapter à vos besoins !",
-      "m1.9": "Téléchargez votre premier rapport ou collez votre texte et découvrez la facilité de compréhension des informations génétiques avec TrialMatch.",
-     "t2": "Confidentialité et gestion des données chez TrialMatch",
-     "m2.1": "Chez TrialMatch, nous valorisons et protégeons votre vie privée. Nous adhérons aux réglementations les plus strictes, y compris le Règlement général sur la protection des données (RGPD), pour garantir que vos informations sont sécurisées et que vos droits sont respectés.",
+      "m1.9": "Téléchargez votre premier rapport ou collez votre texte et découvrez la facilité de compréhension des informations génétiques avec TrialGPT.",
+     "t2": "Confidentialité et gestion des données chez TrialGPT",
+     "m2.1": "Chez TrialGPT, nous valorisons et protégeons votre vie privée. Nous adhérons aux réglementations les plus strictes, y compris le Règlement général sur la protection des données (RGPD), pour garantir que vos informations sont sécurisées et que vos droits sont respectés.",
      "m2.2": "Notre engagement en matière de confidentialité :",
      "m2.3": "Nous ne stockons pas votre rapport : une fois que vous téléchargez un rapport médical pour résumé, nous voulons que vous sachiez que nous ne stockons pas le texte du rapport ni aucune information personnelle qui s'y rapporte. Nous utilisons le rapport exclusivement pour générer le résumé et, Une fois cela fait, les données du rapport sont immédiatement supprimées de nos serveurs.",
      "m2.4": "Commentaires et coordonnées :",

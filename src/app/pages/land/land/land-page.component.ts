@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, TemplateRef, NgZon
 import { trigger, transition, animate } from '@angular/animations';
 import { style } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -48,8 +48,7 @@ declare let html2canvas: any;
   ]
 })
 export class LandPageComponent implements OnInit, OnDestroy  {
-  private subscription: Subscription = new Subscription();
-  loadedDocs: boolean = false;
+  private subscription: Subscription = new Subscription();  loadedDocs: boolean = false;
   step: number = 1;
   docs: any = [];
   screenWidth: number;
@@ -66,6 +65,16 @@ export class LandPageComponent implements OnInit, OnDestroy  {
   valueProm: any = {};
   tempInput: string = '';
   detectedLang: string = 'en';
+  extractedEvents: {
+    conditions: Array<{text: string, selected: boolean, editing?: boolean}>;
+    treatments: Array<{text: string, selected: boolean, editing?: boolean}>;
+    otherTerms: Array<{text: string, selected: boolean, editing?: boolean}>;
+  } = {
+    conditions: [],
+    treatments: [],
+    otherTerms: []
+  };
+  showEventsPanel: boolean = false; //////////////////////////////
   intent: string = '';
   context = [];
   conversation = [];
@@ -126,15 +135,51 @@ export class LandPageComponent implements OnInit, OnDestroy  {
 
   statusColors = {
     'NOT_YET_RECRUITING': '#BCEBCB', // Verde flojo
+    'AVAILABLE': '#BCEBCB', // Verde flojo
     'RECRUITING': '#BCEBCB',         // Verde flojo
+    'ENROLLING_BY_INVITATION': '#FFC107', // Naranja warning cálido
+    'ACTIVE_NOT_RECRUITING': '#FFC107', // Naranja warning cálido
+    'TERMINATED': '#ffa1a2', // Rojo ligero
+    'SUSPENDED': '#ffa1a2', // Rojo ligero
+    'WITHDRAWN': '#ffa1a2', // Rojo ligero
     'COMPLETED': '#ffa1a2',          // Rojo ligero
-    'UNKNOWN' : '#c0c6cf'            // Gris claro
+    'UNKNOWN' : '#c0c6cf',            // Gris claro
   };
 
+  statusOptions = [
+    { label: 'Not yet recruiting', value: 'NOT_YET_RECRUITING' },
+    { label: 'Available', value: 'AVAILABLE' },
+    { label: 'Recruiting', value: 'RECRUITING' },
+    { label: 'Enrolling by invitation', value: 'ENROLLING_BY_INVITATION' },
+    { label: 'Active, not recruiting', value: 'ACTIVE_NOT_RECRUITING' },
+    { label: 'Terminated', value: 'TERMINATED' },
+    { label: 'Suspended', value: 'SUSPENDED' },
+    { label: 'Withdrawn', value: 'WITHDRAWN' },
+    { label: 'Completed', value: 'COMPLETED' },
+    { label: 'Unknown', value: 'UNKNOWN' },
+  ];
+
   filters = {
-    status: '',
-    condition: ''
+    status: ['NOT_YET_RECRUITING', 'AVAILABLE', 'RECRUITING', 'ENROLLING_BY_INVITATION', 'ACTIVE_NOT_RECRUITING', 'TERMINATED', 'SUSPENDED', 'WITHDRAWN', 'COMPLETED', 'UNKNOWN'], // Default selected statuses
+    condition: '',
+    countries: [] // Add countries filter
   };
+
+  getStatusCount(status: string): number {
+    if (!this.clinicalTrials) return 0;
+    return this.clinicalTrials.filter(trial => 
+      trial.OverallStatus === status
+    ).length;
+  }
+
+  getCountryCount(country: string): number {
+    if (!this.clinicalTrials) return 0;
+    return this.clinicalTrials.filter(trial => 
+      trial.Locations && trial.Locations.some(location => 
+        location.country === country
+      )
+    ).length;
+  }
 
   getUniqueLocations(locations: any[]): any[] {
     if (!locations) return [];
@@ -154,27 +199,66 @@ export class LandPageComponent implements OnInit, OnDestroy  {
     if (!this.clinicalTrials) {
       return [];
     }
-    console.log(this.clinicalTrials)
     return this.clinicalTrials.filter(trial => {
       // Filtro por estado del ensayo (OverallStatus)
-      const matchStatus = !this.filters.status 
-                          || trial.OverallStatus === this.filters.status;
+      const matchStatus = this.filters.status.length === 0 
+                          || this.filters.status.includes(trial.OverallStatus);
 
       // Filtro por Condition (búsqueda parcial, ignorando mayúsculas)
       const matchCondition = !this.filters.condition 
         || (trial.Condition && trial.Condition.toLowerCase()
                                    .includes(this.filters.condition.toLowerCase()));
-                                   
 
-      return matchStatus && matchCondition;
+      // Filtro por país
+      const matchCountry = this.filters.countries.length === 0 ||
+        (trial.Locations && trial.Locations.some(location => 
+          this.filters.countries.includes(location.country)
+        ));
+
+      return matchStatus && matchCondition && matchCountry;
     });
   }
 
   clearFilters(): void {
-    this.filters.status = '';
+    this.filters.status = ['RECRUITING', 'NOT_YET_RECRUITING', 'COMPLETED', 'UNKNOWN']; // Reset to default selected statuses
     this.filters.condition = '';
+    this.filters.countries = []; // Clear countries filter
   }
- 
+
+  toggleStatus(value: string): void {
+    const index = this.filters.status.indexOf(value);
+    if (index === -1) {
+      this.filters.status.push(value);
+    } else {
+      this.filters.status.splice(index, 1);
+    }
+  }
+
+  toggleCountry(country: string): void {
+    const index = this.filters.countries.indexOf(country);
+    if (index === -1) {
+      this.filters.countries.push(country);
+    } else {
+      this.filters.countries.splice(index, 1);
+    }
+  }
+
+  getUniqueCountries(): string[] {
+    if (!this.clinicalTrials) return [];
+    
+    const countries = new Set<string>();
+    this.clinicalTrials.forEach(trial => {
+      if (trial.Locations) {
+        trial.Locations.forEach(location => {
+          if (location.country) {
+            countries.add(location.country);
+          }
+        });
+      }
+    });
+    
+    return Array.from(countries).sort();
+  }
 
   langDict = {
     "af": null,
@@ -307,13 +391,13 @@ export class LandPageComponent implements OnInit, OnDestroy  {
     }
   }
 
-  openTrialInfo(trial: any, contentTrial: any) { // abre el modal con la información del trial
+  openTrialInfo(trial: any, contentTrial: any) {
     console.log('Trial object structure:', JSON.stringify(trial, null, 2));
     this.selectedTrial = trial;
     const options: NgbModalOptions = {
       backdrop: 'static',
       keyboard: false,
-      windowClass: 'ModalClass-md'
+      windowClass: 'trial-info-modal'
     };
     this.modalReference = this.modalService.open(contentTrial, options);
   }
@@ -412,6 +496,20 @@ nextDisclaimer() {
   this.stepDisclaimer++;
   if (this.stepDisclaimer > 2) {
       this.finishDisclaimer();
+  }
+}
+
+scrollToFirstTrial() {
+  const firstTrial = document.getElementById('first-trial');
+  if (firstTrial) {
+    const navbarHeight = 70; // Typical navbar height, adjust this value based on your actual navbar height
+    const elementPosition = firstTrial.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
   }
 }
 
@@ -619,10 +717,13 @@ showForm() {
   }
 
   onFileDropped(event) {
+    // Vacías el array antes de agregar los nuevos elementos
+    this.docs = [];
+
     for (let file of event) {
       var reader = new FileReader();
-      reader.readAsArrayBuffer(file); // read file as data url
-      reader.onload = (event2: any) => { // called once readAsDataURL is completed
+      reader.readAsArrayBuffer(file);
+      reader.onload = (event2: any) => {
         var filename = (file).name;
         var extension = filename.substr(filename.lastIndexOf('.'));
         var pos = (filename).lastIndexOf('.')
@@ -693,43 +794,158 @@ showForm() {
 
   sendFile(formData, index) {
     this.submitted = true;
-    this.clinicalTrials = [];  // we clear the array from previous searches
-    this.subscription.add(this.http.post(environment.api + '/api/callTrialMatcher', formData)
-      .subscribe((res: any) => {
-        console.log(res)
-        if (res.clinicalTrials.length > 0) {
-          // Mapear los ensayos clínicos y agregar las propiedades necesarias
-          this.clinicalTrials = res.clinicalTrials.map(trial => ({
-            ...trial,
-            showCriteria: false,
-            isLoadingCriteria: false,
-            structuredCriteria: null
-          }));
-        }
-        if(res.status!=200){
-          this.docs[index].state = 'failed';
-        }else{
-          this.docs[res.doc_id].state = 'done';
-          this.docs[res.doc_id].medicalText = res.data;
-          this.docs[res.doc_id].summary = res.summary;
-          this.docs[res.doc_id].tokens = res.tokens;
-          this.totalTokens = this.totalTokens + res.tokens;
-          this.submitted = false;
-        }
-        
-      }, (err) => {
-        this.docs[index].state = 'failed';
-        console.log(err);
-        this.insightsService.trackException(err);
-        this.submitted = false;
-        var msgFail = this.translate.instant("generics.Data saved fail");
-          if(err.error.message){
-            this.toastr.error(err.error.message, msgFail);
-          }else{
-            this.toastr.error('', msgFail);
+    this.subscription.add(
+      this.http.post(environment.api + '/api/extractEventsFromFile', formData, { observe: 'response' })
+        .subscribe({
+          next: (response: HttpResponse<any>) => {
+            if (response.status !== 200) {
+              this.docs[index].state = 'failed';
+            } else {
+              const resBody = response.body;
+              this.docs[index].state = 'done';
+              this.docs[index].medicalText = resBody.data;
+              this.docs[index].summary = resBody.summary;
+              this.docs[index].tokens = resBody.tokens;
+              this.totalTokens += resBody.tokens;
+
+              // Actualizar extractedEvents con los eventos del archivo
+              if (resBody.events) {
+                this.extractedEvents = {
+                  conditions: resBody.events.conditions?.map((c, index) => ({ text: c, selected: index === 0 })) || [],
+                  treatments: resBody.events.treatments?.map(t => ({ text: t, selected: false })) || [],
+                  otherTerms: resBody.events.otherTerms?.map(t => ({ text: t, selected: false })) || []
+                };
+                // Mostrar el panel de eventos si hay eventos extraídos
+                if (this.extractedEvents.conditions.length > 0 || 
+                    this.extractedEvents.treatments.length > 0 || 
+                    this.extractedEvents.otherTerms.length > 0) {
+                  this.showEventsPanel = true;
+                  this.searchTrials();
+                }
+              }
+              
+              this.submitted = false;
+            }
+          },
+          error: (err) => {
+            this.docs[index].state = 'failed';
+            console.error(err);
+            this.insightsService.trackException(err);
+            this.submitted = false;
+
+            let msgFail = this.translate.instant("generics.Data saved fail");
+            if (err?.error?.message) {
+              this.toastr.error(err.error.message, msgFail);
+            } else {
+              this.toastr.error('', msgFail);
+            }
           }
-      }));
+        })
+    );
   }
+
+  searchTrials() {
+    // Get all selected events
+    const selectedEvents = {
+      conditions: this.extractedEvents.conditions?.filter(c => c.selected).map(c => c.text) || [],
+      treatments: this.extractedEvents.treatments?.filter(t => t.selected).map(t => t.text) || [],
+      otherTerms: this.extractedEvents.otherTerms?.filter(t => t.selected).map(t => t.text) || []
+    };
+
+    // Crear payload JSON
+    const payload = {
+      userId: this.myuuid,
+      events: selectedEvents
+    };
+
+    console.log(payload);
+
+    // Call the trial matcher API
+    this.submitted = true;
+    this.clinicalTrials = []; // Clear previous results
+    
+    this.subscription.add(
+      this.http.post(environment.api + '/api/searchTrials', payload, { observe: 'response' })
+        .subscribe({
+          next: (response: HttpResponse<any>) => {
+            if (response.status !== 200) {
+              this.toastr.error(this.translate.instant("generics.Data saved fail"));
+            } else {
+              if (response.body.clinicalTrials?.length > 0) {
+                this.clinicalTrials = response.body.clinicalTrials.map(trial => ({
+                  ...trial,
+                  showCriteria: false,
+                  isLoadingCriteria: false,
+                  structuredCriteria: null
+                }));
+              }
+              console.log(this.clinicalTrials);
+            }
+            this.submitted = false;
+          },
+          error: (err) => {
+            console.error('Error searching trials:', err);
+            this.insightsService.trackException(err);
+            this.submitted = false;
+
+            let msgFail = this.translate.instant("generics.Data saved fail");
+            if (err?.error?.message) {
+              this.toastr.error(err.error.message, msgFail);
+            } else {
+              this.toastr.error('', msgFail);
+            }
+          }
+        })
+    );
+  }
+
+
+  sendFile_prev(formData, index) { // also receives the list of trials
+    this.submitted = true;
+    this.clinicalTrials = []; // we clear the array from previous searches
+    this.subscription.add(
+      this.http.post(environment.api + '/api/callTrialMatcher', formData, { observe: 'response' })
+        .subscribe({
+          next: (response: HttpResponse<any>) => {
+            console.log(response.body);
+            if (response.body.clinicalTrials?.length > 0) {
+              // Mapear los ensayos clínicos y agregar las propiedades necesarias
+              this.clinicalTrials = response.body.clinicalTrials.map(trial => ({
+                ...trial,
+                showCriteria: false,
+                isLoadingCriteria: false,
+                structuredCriteria: null
+              }));
+            }
+
+            if (response.status !== 200) {
+              this.docs[index].state = 'failed';
+            } else {
+              const resBody = response.body;
+              this.docs[index].state = 'done';
+              this.docs[index].medicalText = resBody.data;
+              this.docs[index].summary = resBody.summary;
+              this.docs[index].tokens = resBody.tokens;
+              this.totalTokens += resBody.tokens;
+              this.submitted = false;
+            }
+          },
+          error: (err) => {
+            this.docs[index].state = 'failed';
+            console.error(err);
+            this.insightsService.trackException(err);
+            this.submitted = false;
+
+            let msgFail = this.translate.instant("generics.Data saved fail");
+            if (err?.error?.message) {
+              this.toastr.error(err.error.message, msgFail);
+            } else {
+              this.toastr.error('', msgFail);
+            }
+          }
+        })
+    );
+  } // sdfg
 
   deleteDoc(doc, index) {
     Swal.fire({
@@ -1185,6 +1401,16 @@ toggleEventOrder() {
   this.orderEvents();
 }
 
+toggleEventsPanel() {
+  this.showEventsPanel = !this.showEventsPanel;
+}
+
+toggleAllInCategory(category: string, selected: boolean) {
+  if (this.extractedEvents && this.extractedEvents[category]) {
+    this.extractedEvents[category].forEach(item => item.selected = selected);
+  }
+}
+
 orderEvents() {
   this.groupedEvents.sort((a, b) => {
     const dateA = a.monthYear.getTime(); // Convertir a timestamp
@@ -1234,6 +1460,37 @@ async translateInverseSummary2(msg): Promise<string> {
       resolve('ok')
     }
   });
+}
+
+getLocationsByCountry(locations: any[]): { [key: string]: { locations: any[] } } {
+  if (!locations) return {};
+  
+  // Group locations by country
+  const groupedLocations = locations.reduce((acc, location) => {
+    const country = location.country || 'Unknown';
+    if (!acc[country]) {
+      acc[country] = {
+        locations: []
+      };
+    }
+    // Add isExpanded property if it doesn't exist
+    if (!location.hasOwnProperty('isExpanded')) {
+      location.isExpanded = false;
+    }
+    acc[country].locations.push(location);
+    return acc;
+  }, {});
+
+  // Sort locations within each country by city
+  Object.keys(groupedLocations).forEach(country => {
+    groupedLocations[country].locations.sort((a, b) => {
+      const cityA = (a.city || '').toLowerCase();
+      const cityB = (b.city || '').toLowerCase();
+      return cityA.localeCompare(cityB);
+    });
+  });
+
+  return groupedLocations;
 }
 
 async translateInverseSummary(msg): Promise<string> {
@@ -1446,8 +1703,8 @@ async translateInverseSummary(msg): Promise<string> {
 
 
           async translateInverseSummaryDx(msg): Promise<string> {
-            return new Promise((resolve, reject) => {
-              // Función auxiliar para procesar el contenido de la tabla
+  return new Promise((resolve, reject) => {
+    // Función auxiliar para procesar el contenido de la tabla
               const processTable = (tableContent) => {
                 return tableContent.replace(/\n/g, ''); // Eliminar saltos de línea dentro de la tabla
               };
@@ -1960,18 +2217,6 @@ async translateInverseSummary(msg): Promise<string> {
   
 
     }
-  
-    saveChanges(modal) {
-      if (this.editableDiv && this.editableDiv.nativeElement) {
-        this.summaryPatient = this.editableDiv.nativeElement.innerHTML;
-      }
-      modal.close();
-    }
-  
-    cancelChanges(modal) {
-      this.editedContent = this.originalContent;
-      modal.close();
-    }
 
     toggleCriteria(trial: any) {
       // Alternar la visibilidad
@@ -2012,4 +2257,3 @@ async translateInverseSummary(msg): Promise<string> {
       }
     }
 }
-

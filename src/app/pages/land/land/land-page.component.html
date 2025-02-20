@@ -10,15 +10,15 @@
                     <div class="container-home2">
                         <h1 class="mt-3 title-home text-center text-bold-700 mb-4">{{'demo.How do you want to start?' |
                             translate }}</h1>
-                        <div class="mb-4 row row-home w-100">
-                            <div class="col-md-4">
+                        <div class="mb-4 row row-home">
+                            <div class="col-12 col-sm-4 mb-3">
                                 <img class="logo-img pointer" [src]="icons[3].data"
                                     (click)="entryOpt('opt1', contentPhoto)" />
                                 <buttom class="btn btn-sm btn-primary text-bold-700 mt-2"
                                     (click)="entryOpt('opt1', contentPhoto)">{{'demo.Take a photo' | translate }}
                                 </buttom>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-12 col-sm-4 mb-3">
                                 <img class="logo-img" [src]="icons[4].data" />
                                 <div class="container-custom2">
                                     <input class="pointer" aria-label="new file" type="file" #fileDropRef
@@ -29,7 +29,7 @@
                                 </div>
                                 <!--<buttom class="btn btn-sm btn-primary text-bold-700 mt-2" (click)="entryOpt('opt2', null)">Usar uno o varios informes</buttom>-->
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-12 col-sm-4 mb-3">
                                 <img class="logo-img pointer" [src]="icons[5].data"
                                     (click)="showPanelMedium(contentSummaryDx)" />
                                 <buttom class="btn btn-sm btn-primary text-bold-700 mt-2"
@@ -54,226 +54,334 @@
             <div *ngIf="loadedDocs">
 
                 <div class="mt-4 col-md-12">
-                    <div class="col-md-12 mb-3">
-                        <div class="row">
-                            <div class="col-md-5 text-end pe-4">
-                                <buttom class="buttomback2 mb-2 btn btn-sm btn-primary text-bold-700" (click)="backmode0()">{{'demo.New patient' | translate }}</buttom>
-                            </div>
-                            <div class="col-md-5 text-start">
-                                <h4 (click)="showModeGod()">
-                                    {{'demo.Clinical trials' | translate }}
-                                    <span class="small">
-                                        [{{filteredTrials.length}}]
-                                    </span>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-lg-5">
-                            <div class="card" *ngIf="docs.length > 0">
-                                <!--<div class="card-content">
-                                    <div class="card-body py-0">
-                                        <div class="media pb-1">
-                                            <div class="media-body text-left">
-                                                <span *ngIf="loadedDocs">
-                                                    <h3 class="font-large-1 mb-0" *ngIf="docs.length>0" (click)="showModeGod()">
-                                                        {{docs.length}}</h3>
-                                                    <h3 class="font-large-1 mb-0" *ngIf="docs.length==0">0</h3>
-                                                </span>
-                                                <span *ngIf="!loadedDocs">
-                                                    <em class="fa fa-spinner fa-spin fa-fw primary"></em>
-                                                </span>
-                                                <span>{{'home.s1.1' | translate }}</span>
-                                            </div>
-                                            <div class="media-right text-right">
-                                                <em class="fa fa-files-o secondary fa-2x"></em>
-                                            </div>
-                                        </div>
+                            <buttom class="buttomback2 btn btn-sm btn-primary text-bold-700 w-100 mb-3"
+                                (click)="backmode0()">
+                                {{'demo.New patient' | translate }}
+                            </buttom>
+
+                            <!-- Main Card with Toggle Header -->
+                            <div class="card rounded-lg shadow-sm" *ngIf="docs.length > 0">
+                                <!-- Navigation Tabs -->
+                                <div class="navigation-tabs">
+                                    <div class="tab" (click)="showEventsPanel = false"
+                                        [class.active]="!showEventsPanel">
+                                        Uploaded report
+                                        <div class="underline" *ngIf="!showEventsPanel"></div>
+                                    </div>
+                                    <div class="tab" (click)="showEventsPanel = true" [class.active]="showEventsPanel">
+                                        Patient filters
+                                        <div class="underline" *ngIf="showEventsPanel"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Documents View -->
+                                <div *ngIf="!showEventsPanel">
+                                    <!--<div class="p-2">
+                                    <div class="text-left px-2">
+                                        <h1 class="display-5 mt-3 mb-0" style="font-size: 2.5rem;">{{docs.length}}</h1>
+                                        <p class="text-muted mb-0">Uploaded files</p>
                                     </div>
                                 </div>-->
-                                <div>
-                                    <hr class="mt-0 mb-0">
-                                    <div *ngFor="let doc of docs; let i = index " class="">
-                                        <div class="card-body border-bottom"
-                                            [ngClass]="{'panelHearder': innerWidth>992}">
-                                            <span class="text-left">
-                                                <span class="dark nav-item pt-2" ngbDropdown display="dynamic"
-                                                    placement="bottom-right" style="position: absolute; right: 0px;">
-                                                    <a class="position-relative colorlink" style="padding: 0rem 1rem;"
-                                                        id="dropdownSympt{{i}}" ngbDropdownToggle
-                                                        title="{{'generics.Options' | translate }}">
-                                                        <i class="fa fa-ellipsis-v fa-1_5x"></i>
-                                                    </a>
-                                                    <div ngbDropdownMenu aria-labelledby="dropdownSympt{{i}}"
-                                                        class="dropdown">
-                                                        <a class="dropdown-item py-1 border-bottom"
-                                                            (click)="getBlobUrl(doc)" target="_blank">
-                                                            <i class="fa fa-file"></i>
-                                                            <span class="ml-2">{{'messages.m1.3' | translate }}</span>
-                                                        </a>
-                                                        <!--<a class="dropdown-item py-1" href="javascript:;"
-                                                            (click)="openResults(doc, contentSummaryDoc)">
-                                                            <i class="fa fa-file"></i><span
-                                                                class="ml-2">{{'messages.m1.2' | translate
-                                                                }}</span>
-                                                        </a>-->
-                                                        <a *ngIf="doc.state=='done'" class="dropdown-item py-1 danger"
-                                                            href="javascript:;" (click)="deleteDoc(doc, i);">
-                                                            <i class="fa fa-trash"></i><span
-                                                                class="ml-2">{{'generics.Delete' | translate
-                                                                }}</span>
-                                                        </a>
+                                    <div class="p-3">
+                                        <!-- <div *ngFor="let doc of docs; let i = index" class="border-top py-2"> -->
+                                        <div *ngFor="let doc of docs; let i = index" class="py-2">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <span *ngIf="doc.dataFile">
+                                                        <span
+                                                            class="d-block font-weight-medium">{{doc.dataFile.name}}</span>
+                                                        <span *ngIf="doc.tokens>1000"
+                                                            class="d-block text-muted small">{{doc.tokens |
+                                                            tokens}}</span>
+                                                    </span>
+                                                    <div class="mt-1">
+                                                        <span class="text-muted small">
+                                                            {{'generics.Status' | translate }}:
+                                                            <span *ngIf="doc.state=='done'">
+                                                                <em class="fa fa-check fa-fw text-success"></em>
+                                                            </span>
+                                                            <span *ngIf="doc.state!='done' && doc.state!='failed'">
+                                                                <span *ngIf="doc.state=='uploading'">{{'messages.m1.1' |
+                                                                    translate }}</span>
+                                                                <em class="fa fa-spinner fa-spin fa-fw text-info"></em>
+                                                            </span>
+                                                            <span *ngIf="doc.state=='failed'">
+                                                                <em class="fa fa-times fa-fw text-danger"></em>
+                                                            </span>
+                                                        </span>
                                                     </div>
-                                                </span>
-                                                <span *ngIf="doc.dataFile">
-                                                    <span class="d-block">{{doc.dataFile.name}}</span>
-                                                    <!--<span class="d-block text-muted">{{ doc.dataFile.event.size | bytes }} </span>-->
-                                                    <span *ngIf="doc.tokens>1000"
-                                                        class="d-block text-muted">{{doc.tokens | tokens}} </span>
-                                                </span>
-                                                <span>
-                                                    {{'generics.Status' | translate }}:
-                                                </span>
-                                                <span *ngIf="doc.state=='done'">
-                                                    <em class="fa fa-check fa-fw success"></em>
-                                                </span>
-                                                <span *ngIf="doc.state!='done' && doc.state!='failed'">
-                                                    <span *ngIf="doc.state=='uploading'">{{'messages.m1.1' | translate
-                                                        }}</span>
-                                                    <em class="fa fa-spinner fa-spin fa-fw info"></em>
-                                                </span>
-                                                <span *ngIf="doc.state=='failed'">
-                                                    <em class="fa fa-times fa-fw danger"></em>
-                                                </span>
-                                            </span>
-                                            <div class="d-block">
-                                                <span *ngIf="doc.numTotalEvents>0">
-                                                    <span *ngIf="doc.numLeftEvents>0">
-                                                        {{doc.numLeftEvents}} {{'home.of' | translate }}
-                                                        {{doc.numTotalEvents}} {{'home.unchecked events' | translate }}
-                                                    </span>
-                                                    <span *ngIf="doc.numLeftEvents==0">
-                                                        {{doc.numTotalEvents}} {{'home.checked events' | translate }}
-                                                    </span>
-                                                    <span></span>
-                                                </span>
-                                                <span *ngIf="doc.numTotalEvents==0">{{'home.No events have been
-                                                    detected' | translate }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-2" *ngIf="totalTokens>1000">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar"
-                                                [style.width]="(totalTokens / TOKENS_LIMIT) * 100 + '%'"
-                                                [attr.aria-valuenow]="totalTokens" aria-valuemin="0"
-                                                aria-valuemax="TOKENS_LIMIT">
-                                            </div>
-                                        </div>
-                                        <p> {{totalTokens | tokens}} / {{TOKENS_LIMIT |tokens}}</p>
-                                        <p *ngIf="totalTokens>TOKENS_LIMIT" class="danger"> {{'demo.Tokens limit
-                                            exceeded' | translate }}</p>
-                                    </div>
-
-                                </div>
-                                <div class="border-top card-footer center-elements" style="background-color: #d9d9d9;">
-                                    <p class="text-bold-700">{{'demo.Add new reports' | translate }}</p>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div><img class="logo-img-sm pointer" [src]="icons[3].data" width="40px"
-                                                    (click)="entryOpt('opt1', contentPhoto)" /></div>
-                                            <div>
-                                                <buttom class="btnblock btn btn-sm btn-primary mt-2"
-                                                    (click)="entryOpt('opt1', contentPhoto)">{{'demo.Take a photo' |
-                                                    translate }}</buttom>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div><img class="logo-img-sm" [src]="icons[4].data" width="40px" /></div>
-                                            <div>
-                                                <div class="container-custom2">
-                                                    <input class="pointer" aria-label="new file" type="file"
-                                                        #fileDropRef id="fileDropRef" multiple
-                                                        (change)="onFileChangePDF($event);"
-                                                        accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
-                                                    <buttom class="btnblock btn btn-sm btn-primary mt-2"
-                                                        for="fileDropRef">{{'demo.Use a file' | translate }}</buttom>
+                                                </div>
+                                                <div class="ml-3">
+                                                    <div class="dropdown" ngbDropdown display="dynamic"
+                                                        placement="bottom-right">
+                                                        <a class="text-muted" style="cursor: pointer;"
+                                                            id="dropdownSympt{{i}}" ngbDropdownToggle>
+                                                            <i class="fa fa-ellipsis-v"></i>
+                                                        </a>
+                                                        <div ngbDropdownMenu aria-labelledby="dropdownSympt{{i}}"
+                                                            class="dropdown-menu">
+                                                            <a class="dropdown-item py-1 border-bottom"
+                                                                (click)="getBlobUrl(doc)" target="_blank">
+                                                                <i class="fa fa-file"></i>
+                                                                <span class="ml-2">{{'messages.m1.3' | translate
+                                                                    }}</span>
+                                                            </a>
+                                                            <a *ngIf="doc.state=='done'"
+                                                                class="dropdown-item py-1 text-danger"
+                                                                href="javascript:;" (click)="deleteDoc(doc, i);">
+                                                                <i class="fa fa-trash"></i>
+                                                                <span class="ml-2">{{'generics.Delete' | translate
+                                                                    }}</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="col-sm-4">
-                                            <div><img class="logo-img-sm pointer" [src]="icons[5].data" width="40px"
-                                                    (click)="showPanelMedium(contentSummaryDx)" /></div>
-                                            <div>
-                                                <buttom class="btnblock btn btn-sm btn-primary mt-2"
-                                                    (click)="showPanelMedium(contentSummaryDx)">{{'demo.Write text' |
-                                                    translate }}</buttom>
+                                    </div>
+                                    <div class="border-top p-3" style="background-color: #f1f3f5;">
+                                        <p class="text-bold-700 text-center mb-3">{{'Add new report' | translate }}</p>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="text-center mb-2">
+                                                    <img class="logo-img-sm pointer" [src]="icons[3].data" width="40px"
+                                                        (click)="entryOpt('opt1', contentPhoto)" />
+                                                </div>
+                                                <div>
+                                                    <buttom class="btnblock btn btn-sm btn-primary w-100"
+                                                        (click)="entryOpt('opt1', contentPhoto)">{{'Take another photo'
+                                                        |
+                                                        translate }}</buttom>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="text-center mb-2">
+                                                    <img class="logo-img-sm" [src]="icons[4].data" width="40px" />
+                                                </div>
+                                                <div>
+                                                    <div class="container-custom2">
+                                                        <input class="pointer" aria-label="new file" type="file"
+                                                            #fileDropRef id="fileDropRef" multiple
+                                                            (change)="onFileChangePDF($event);"
+                                                            accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
+                                                        <buttom class="btnblock btn btn-sm btn-primary w-100"
+                                                            for="fileDropRef">{{'Use another file' | translate }}
+                                                        </buttom>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="text-center mb-2">
+                                                    <img class="logo-img-sm pointer" [src]="icons[5].data" width="40px"
+                                                        (click)="showPanelMedium(contentSummaryDx)" />
+                                                </div>
+                                                <div>
+                                                    <buttom class="btnblock btn btn-sm btn-primary w-100"
+                                                        (click)="showPanelMedium(contentSummaryDx)">{{'Write another
+                                                        text' |
+                                                        translate }}</buttom>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Events View -->
+                                <div *ngIf="showEventsPanel" class="p-3">
+                                    <!-- Mientras se está subiendo el archivo -->
+                                    <div *ngIf="submitted" class="text-center py-4">
+                                        <em class="fa fa-spinner fa-spin fa-2x fa-fw text-primary mb-3"></em>
+                                        <p class="mb-0">{{'generics.Please wait' | translate }}</p>
+                                        <p class="text-muted small mb-0">Uploading and processing your file. This may
+                                            take a few seconds...</p>
+                                    </div>
+
+                                    <!-- Mientras se está cargando el informe -->
+                                    <div *ngIf="!submitted && !loadedDocs" class="text-center py-4">
+                                        <em class="fa fa-spinner fa-spin fa-2x fa-fw text-primary mb-3"></em>
+                                        <p class="mb-0">Loading report to extract filters...</p>
+                                    </div>
+
+                                    <!-- Mientras el informe ya cargó pero sigue procesando o no hay eventos extraídos -->
+                                    <div *ngIf="!submitted && loadedDocs && (!extractedEvents || isProcessing)"
+                                        class="text-center py-4">
+                                        <em class="fa fa-spinner fa-spin fa-2x fa-fw text-primary mb-3"></em>
+                                        <p class="mb-0">Processing documents to extract relevant information...</p>
+                                    </div>
+
+                                    <!-- Contenido cuando ya cargó y se han extraído los eventos -->
+                                    <div *ngIf="!submitted && loadedDocs && extractedEvents && !isProcessing"
+                                        class="categories-container">
+                                        <div *ngIf="extractedEvents?.conditions?.length > 0" class="mb-2">
+                                            <div class="category-header">
+                                                <div class="d-flex align-items-center">
+                                                    <input type="checkbox" class="form-check-input me-2"
+                                                        [id]="'all-conditions'"
+                                                        (change)="toggleAllInCategory('conditions', $event.target.checked)" />
+                                                    <h5 class="mb-0">Conditions</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div *ngFor="let cond of extractedEvents.conditions; let i=index"
+                                                    class="form-check mb-1 col-md-6 col-sm-12">
+                                                    <input type="checkbox" class="form-check-input" [id]="'cond-'+i"
+                                                        [(ngModel)]="cond.selected" />
+                                                    <label class="form-check-label" [for]="'cond-'+i">{{ cond.text
+                                                        }}</label>
+                                                </div>
                                             </div>
                                         </div>
 
+                                        <div *ngIf="extractedEvents?.treatments?.length > 0" class="mb-2">
+                                            <div class="category-header">
+                                                <div class="d-flex align-items-center">
+                                                    <input type="checkbox" class="form-check-input me-2"
+                                                        [id]="'all-treatments'"
+                                                        (change)="toggleAllInCategory('treatments', $event.target.checked)" />
+                                                    <h5 class="mb-0">Treatments</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div *ngFor="let treat of extractedEvents.treatments; let i=index"
+                                                    class="form-check mb-1 col-md-6 col-sm-12">
+                                                    <input type="checkbox" class="form-check-input" [id]="'treat-'+i"
+                                                        [(ngModel)]="treat.selected" />
+                                                    <label class="form-check-label" [for]="'treat-'+i">{{ treat.text
+                                                        }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="extractedEvents?.otherTerms?.length > 0" class="mb-2">
+                                            <div class="category-header">
+                                                <div class="d-flex align-items-center">
+                                                    <input type="checkbox" class="form-check-input me-2"
+                                                        [id]="'all-otherTerms'"
+                                                        (change)="toggleAllInCategory('otherTerms', $event.target.checked)" />
+                                                    <h5 class="mb-0">Other Terms</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div *ngFor="let term of extractedEvents.otherTerms; let i=index"
+                                                    class="form-check mb-1 col-md-6 col-sm-12">
+                                                    <input type="checkbox" class="form-check-input" [id]="'term-'+i"
+                                                        [(ngModel)]="term.selected" />
+                                                    <label class="form-check-label" [for]="'term-'+i">{{ term.text
+                                                        }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!--<button class="mt-3 btn btn-primary" style="padding: 0.2rem 0.57rem;" 
-                                    [disabled]="callingOpenai" (click)="openFileInput(fileDropRef2)" aria-label="new file">
-                                    <em class="fa fa-paperclip fa-rotate-180 h-4 w-auto" width="1em" height="1em" fill="currentColor"></em> {{'demo.Add new reports' | translate }}
+
+                                    <button class="btn btn-primary w-100 mt-0 text-bold-700" (click)="searchTrials()">
+                                        {{ 'Search trials' | translate }}
                                     </button>
-                                    <p class="mt-2 d-block">{{'demo.Accepted files' | translate }}</p>
-                                    <input type="file" #fileDropRef2 id="fileDropRef2" multiple style="display: none;" (change)="onFileChangePDF($event)"
-                                    accept=".pdf, .docx" />-->
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-7" *ngIf="clinicalTrials.length > 0">
-                            <div class="filters-container d-flex flex-wrap gap-2 mb-3">
-                                <!-- Filtrar por estado (OverallStatus) -->
-                                <label for="statusFilter">Estado:</label>
-                                <select id="statusFilter" 
-                                        [(ngModel)]="filters.status" 
-                                        class="form-control form-control-sm" 
-                                        style="max-width:200px;">
-                                    <option value="">Todos</option>
-                                    <option value="RECRUITING">Recruiting</option>
-                                    <option value="NOT_YET_RECRUITING">Not yet recruiting</option>
-                                    <option value="COMPLETED">Completed</option>
-                                    <option value="UNKNOWN">Unknown</option>
-                                </select>
-                            
-                                <!-- Filtrar por Condition (coincidencia parcial en trial.Condition) -->
-                                <label for="conditionFilter">Condition:</label>
-                                <input id="conditionFilter" 
-                                       type="text"
-                                       [(ngModel)]="filters.condition" 
-                                       placeholder="Buscar condition..." 
-                                       class="form-control form-control-sm"
-                                       style="max-width:200px;"/>
-                            
-                                <!-- Botón para limpiar/resetear filtros -->
-                                <button class="btn btn-secondary btn-sm" (click)="clearFilters()">
-                                    Limpiar filtros
-                                </button>
+                        <div class="col-lg-7">
+                            <!-- Remove duplicated events section and keep only filters and trials -->
+                            <h4 class="clinical-trials-title mb-3" *ngIf="docs.length > 0">
+                                {{'demo.Clinical trials' | translate }}
+                                <span class="small pointer" *ngIf="clinicalTrials.length > 0"
+                                    (click)="scrollToFirstTrial()">
+                                    — showing {{filteredTrials.length}}/{{clinicalTrials.length}}
+                                </span>
+                            </h4>
+                            <div class="filters-section card p-3 mb-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="conditionFilter">Condition:</label>
+                                            <input id="conditionFilter" type="text" [(ngModel)]="filters.condition"
+                                                placeholder="Search condition..." class="form-control mt-0" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="statusFilter">Status:</label>
+                                            <div class="dropdown-container w-100" ngbDropdown>
+                                                <button class="btn btn-outline-secondary w-100 text-start"
+                                                    id="statusDropdown" ngbDropdownToggle>
+                                                    {{ filters.status.length ? filters.status.length + ' selected' :
+                                                    'Select status' }}
+                                                </button>
+                                                <div class="dropdown-menu w-100" ngbDropdownMenu
+                                                    aria-labelledby="statusDropdown">
+                                                    <div class="custom-checkbox-container"
+                                                        *ngFor="let status of statusOptions">
+                                                        <div class="custom-checkbox-wrapper">
+                                                            <input type="checkbox" [id]="'status-' + status.value"
+                                                                [checked]="filters.status.includes(status.value)"
+                                                                (change)="toggleStatus(status.value)">
+                                                            <label [for]="'status-' + status.value">
+                                                                {{ status.label }}
+                                                                <span class="badge">{{ getStatusCount(status.value)
+                                                                    }}</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="countriesFilter">Countries:</label>
+                                            <div class="dropdown-container w-100" ngbDropdown>
+                                                <button class="btn btn-outline-secondary w-100 text-start"
+                                                    id="countriesDropdown" ngbDropdownToggle>
+                                                    {{ filters.countries.length ? filters.countries.length + ' selected'
+                                                    : 'Select countries' }}
+                                                </button>
+                                                <div class="dropdown-menu w-100" ngbDropdownMenu
+                                                    aria-labelledby="countriesDropdown">
+                                                    <div class="custom-checkbox-container"
+                                                        *ngFor="let country of getUniqueCountries()">
+                                                        <div class="custom-checkbox-wrapper">
+                                                            <input type="checkbox" [id]="'country-' + country"
+                                                                [checked]="filters.countries.includes(country)"
+                                                                (change)="toggleCountry(country)">
+                                                            <label [for]="'country-' + country">
+                                                                {{ country }}
+                                                                <span class="badge">{{ getCountryCount(country)
+                                                                    }}</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="buttomback2 btn btn-sm btn-primary text-bold-700 w-100 mb-1"
+                                            (click)="clearFilters()">
+                                            Clear filters
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="row">
-                                <div class="col-12 mb-3" *ngFor="let trial of filteredTrials">
-                                    <div class="card">
+                                <div class="col-12 mb-3" *ngFor="let trial of filteredTrials; let first = first">
+                                    <div class="card" [id]="first ? 'first-trial' : null">
                                         <!-- COLOR BAR -->
                                         <div class="status-strip"
                                             [style.backgroundColor]="statusColors[trial.OverallStatus]">
                                             <div class="d-flex align-items-center justify-content-between w-100">
                                                 <div class="fw-bold ms-2">
-                                                    <a href="https://clinicaltrials.gov/study/{{trial.NCTId}}" 
-                                                       target="_blank" 
-                                                       class="trial-title-link">
-                                                       {{trial.BriefTitle}}
+                                                    <a href="https://clinicaltrials.gov/study/{{trial.NCTId}}"
+                                                        target="_blank" class="trial-title-link">
+                                                        {{trial.BriefTitle}}
                                                     </a>
                                                 </div>
                                                 <div class="d-flex align-items-center px-2">
-                                                    <button class="info-circle"
-                                                            (click)="openTrialInfo(trial, contentTrial)"
-                                                            title="{{ 'generics.Information' | translate }}">
-                                                        i
-                                                    </button>
+                                                    <span class="fa fa-question-circle fa-1-4x pointer"
+                                                        (click)="openTrialInfo(trial, contentTrial)"
+                                                        title="{{ 'generics.Information' | translate }}">
+                                                </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -288,26 +396,72 @@
                                         </div>
 
                                         <div class="card-body p-2" style="border-top: 1px solid #eee;">
-                                            <p class="mb-0">
-                                                <strong>Locations ({{getUniqueLocations(trial.Locations)?.length || 0}}):</strong> 
-                                                <span *ngIf="trial.Locations?.length">
-                                                    <div *ngFor="let location of getUniqueLocations(trial.Locations); let last = last">
-                                                        {{location.facility || location.name || location}}
-                                                        <span *ngIf="location.city">({{location.city}})</span>
-                                                        <span *ngIf="location.country">({{location.country}})</span>
-                                                    </div>
+                                            <p class="mb-0" *ngIf="getUniqueLocations(trial.Locations)?.length > 1">
+                                                <strong>Organisation:</strong> {{trial.Locations[0].facility ||
+                                                trial.Locations[0].name || 'N/A'}}
+                                            </p>
+                                            <p class="mb-0" *ngIf="getUniqueLocations(trial.Locations)?.length > 1">
+                                                <span
+                                                    class="location-header pointer d-flex align-items-center justify-content-between w-100"
+                                                    (click)="trial.showLocations = !trial.showLocations">
+                                                    <strong>Locations (<u>{{getUniqueLocations(trial.Locations)?.length
+                                                            || 0}}</u>)</strong>
+                                                    <i class="fa fa-chevron-down ms-2"
+                                                        [ngClass]="{'rotated': trial.showLocations}"></i>
                                                 </span>
-                                                <span *ngIf="!trial.Locations?.length">N/A</span>
+                                            </p>
+                                            <div *ngIf="trial.showLocations && getUniqueLocations(trial.Locations)?.length > 1"
+                                                class="location-content ml-2">
+                                                <div class="location-list compact">
+                                                    <div *ngFor="let country of getLocationsByCountry(getUniqueLocations(trial.Locations)) | keyvalue"
+                                                        class="country-section">
+                                                        <div class="country pointer"
+                                                            (click)="country.value.locations[0].isExpanded = !country.value.locations[0].isExpanded">
+                                                            <i class="arrow-icon"
+                                                                [ngClass]="{'rotated': country.value.locations[0].isExpanded}"></i>
+                                                            <span>{{country.key}}</span>
+                                                        </div>
+                                                        <div *ngIf="country.value.locations[0].isExpanded"
+                                                            class="country-content ml-2">
+                                                            <ng-container
+                                                                *ngFor="let location of country.value.locations">
+                                                                <div *ngIf="location.city" class="city">
+                                                                    {{location.city}}
+                                                                    <ul class="hospital-list">
+                                                                        <li>{{location.facility || location.name ||
+                                                                            'N/A'}}</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div *ngIf="!location.city">
+                                                                    <ul class="hospital-list">
+                                                                        <li>{{location.facility || location.name ||
+                                                                            'N/A'}}</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Vista simplificada para una única ubicación -->
+                                            <div *ngIf="getUniqueLocations(trial.Locations)?.length === 1">
+                                                <p class="mb-0"><strong>Organisation:</strong>
+                                                    {{trial.Locations[0].facility || trial.Locations[0].name || 'N/A'}}
+                                                </p>
+                                                <p class="mb-0"><strong>Location:</strong> {{(trial.Locations[0].city ?
+                                                    trial.Locations[0].city + ', ' : '') + (trial.Locations[0].country
+                                                    || 'N/A')}}</p>
+                                            </div>
+                                            <p class="mb-0" *ngIf="!trial.Locations?.length">
+                                                <strong>Locations:</strong> <span>N/A</span>
                                             </p>
                                         </div>
 
-                                        <div class="card-footer pointer pt-2 pb-2" 
-                                             (click)="toggleCriteria(trial)"
-                                             style="border-top: 1px solid #eee;">
+                                        <div class="card-footer pointer pt-2 pb-2" (click)="toggleCriteria(trial)"
+                                            style="border-top: 1px solid #eee;">
                                             <div class="d-flex align-items-center">
                                                 <!-- Arrow icon with loading state -->
-                                                <i class="arrow-icon"
-                                                   [ngClass]="{
+                                                <i class="arrow-icon" [ngClass]="{
                                                       'rotated': trial.showCriteria
                                                     }">
                                                 </i>
@@ -322,29 +476,17 @@
                                             </div>
 
                                             <!-- Criteria content - only show when not loading and criteria should be visible -->
-                                            <div *ngIf="trial.showCriteria && !trial.isLoadingCriteria" class="mt-2 criteria-container">
+                                            <div *ngIf="trial.showCriteria && !trial.isLoadingCriteria"
+                                                class="mt-2 criteria-container">
                                                 <!-- Who can participate section -->
                                                 <div *ngIf="trial.structuredCriteria?.inclusion?.length > 0">
                                                     <div class="criteria-section-title">
                                                         {{ 'demo.Who can participate in the study?' | translate }}
                                                     </div>
-                                                    <div *ngFor="let inc of trial.structuredCriteria.inclusion" class="row criteria-row align-items-center">
+                                                    <div *ngFor="let inc of trial.structuredCriteria.inclusion"
+                                                        class="row criteria-row align-items-center">
                                                         <div class="col-auto icon-column">✔️</div>
                                                         <div class="col criteria-text">{{ inc }}</div>
-                                                        <div class="col-auto d-flex align-items-center gap-2 criteria-checkboxes">
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">✔️</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">❌</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">?</span>
-                                                            </label>
-                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -353,23 +495,10 @@
                                                     <div class="criteria-section-title">
                                                         {{ 'demo.Who cannot participate in the study?' | translate }}
                                                     </div>
-                                                    <div *ngFor="let exc of trial.structuredCriteria.exclusion" class="row criteria-row align-items-center">
+                                                    <div *ngFor="let exc of trial.structuredCriteria.exclusion"
+                                                        class="row criteria-row align-items-center">
                                                         <div class="col-auto icon-column">❌</div>
                                                         <div class="col criteria-text">{{ exc }}</div>
-                                                        <div class="col-auto d-flex align-items-center gap-2 criteria-checkboxes">
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">✔️</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">❌</span>
-                                                            </label>
-                                                            <label class="checkbox-label">
-                                                                <input type="checkbox" />
-                                                                <span class="black-icon">?</span>
-                                                            </label>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -378,117 +507,12 @@
                                 </div>
                             </div>
                         </div>
-
-                        <ng-template #contentTrial let-c="close" let-d="dismiss" appendTo="body">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Clinical Trial - {{ selectedTrial?.NCTId }}</h5>
-                                <button type="button" class="close" aria-label="Close" (click)="closeModalTrial()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Title:</strong> {{selectedTrial?.BriefTitle || 'N/A'}}</p>
-                                <p><strong>Organization:</strong> {{selectedTrial?.Organization || 'N/A'}}</p>
-                                <p><strong>Status:</strong> {{selectedTrial?.OverallStatus || 'N/A'}}</p>
-                                <p><strong>Summary:</strong> {{selectedTrial?.BriefSummary || 'N/A'}}</p>
-                                <p><strong>Condition:</strong> {{selectedTrial?.Condition || 'N/A'}}</p>
-                                <p><strong>Intervention:</strong> {{selectedTrial?.InterventionName || 'N/A'}}</p>
-                                <p><strong>Locations:</strong> {{ selectedTrial?.Locations?.length ? (selectedTrial.Locations | json) : 'N/A' }}</p>
-                                <p><strong>Participation Criteria:</strong> {{ selectedTrial?.ParticipationCriteria || 'N/A' }}</p>
-                            </div>
-                        </ng-template>
-                      
-
-
-                        </div>
-                        <div class="offset-md-5 col-md-7" *ngIf="docs.length>0 && modegod">
-                            <div class="p-2 mt-2 rounded bg-grey" style="max-width: 700px;">
-                                <h5 class="text-muted mt-3 white">{{'home.s1.2' | translate }}
-                                    <button class="float-right btn btn-primary" (click)="deleteChat()">
-                                        <em class="fa fa-plus mr-1"></em> {{'home.s1.2.1' | translate }}
-                                    </button>
-                                    <button *ngIf="messages.length>1" class="float-right btn btn-primary mr-2"
-                                        (click)="copyConversationToClipboard()"> <em class="fa fa-clipboard mr-1"></em>
-                                        {{'generics.Copy' | translate }} Chat</button>
-                                </h5>
-                                <div class="chat-container">
-                                    <div *ngFor="let message of messages; let i = index" class="chat-messages"
-                                        [ngClass]="{'user-is-sender': message.isUser}">
-                                        <div *ngIf="!message.isUser" class="ia-message-container mr-2 bg-white border"
-                                            style="padding: 0.5rem;align-self: flex-start;border-radius: 1rem;">
-                                            <img src="assets/img/iconchat.webp" />
-                                        </div>
-                                        <div class="message-row"
-                                            [ngClass]="{'user-message': message.isUser, 'response-message': !message.isUser, 'response-form': !message.isUser}">
-                                            <ng-container *ngIf="!message.task && !message.file">
-                                                <span [innerHTML]="message.text | safe: 'html'"
-                                                    (click)="onMessageClick($event, i)"></span>
-                                                <span *ngIf="!message.isUser && i== messages.length-1"
-                                                    class="d-block mt-2">
-                                                    <span class="float-right" *ngIf="i!=0">
-                                                        <em class="fa fa-clipboard pointer"
-                                                            (click)="copymsg(message)"></em>
-                                                    </span>
-
-                                                </span>
-                                            </ng-container>
-
-                                        </div>
-                                        <div *ngIf="message.isUser" [ngClass]="{'user-message': message.isUser}"
-                                            class="ml-2 bg-primary white" style="padding: 0.5rem;">
-                                            <strong>{{'generics.Me' | translate }}</strong>
-                                        </div>
-                                    </div>
-                                    <span *ngIf="preparingFile">
-                                        <small class="d-block">{{'generics.Preparing to upload' | translate }}</small>
-                                        <i class="fa fa-spinner fa-spin fa-3x fa-fw info"></i>
-                                    </span>
-                                    <div class="chat-messages pt-2" *ngIf="callingOpenai" style="border-radius: 1rem;">
-                                        <span class="response-message font-small-3"
-                                            style="background-color: white !important;"
-                                            [innerHTML]="messagesExpectOutPut">
-                                        </span>
-                                        <em class="ml-1 fa fa-spinner fa-spin white fa-fw fa-2x"
-                                            style="align-self: center;"></em>
-                                    </div>
-                                    <!--<div *ngIf="callingOpenai">
-                                        <em class="fa fa-spinner fa-spin primary fa-fw"></em>
-                                    </div>-->
-                                    <span>
-                                        <div class="d-flex align-items-center input-container mt-3"
-                                            *ngIf="!callingOpenai">
-                                            <input type="text" [(ngModel)]="message" [disabled]="callingOpenai"
-                                                placeholder="{{'generics.Write a message' | translate }}..."
-                                                (keydown.enter)="sendMessage()" class="mt-0 border-0 mr-2 flex-grow-1">
-                                            <button class="mr-1 btn btn-secondary" style="padding: 0.2rem 0.57rem;"
-                                                [disabled]="callingOpenai" (click)="openFileInput(fileDropRef2)"
-                                                aria-label="new file">
-                                                <em class="fa fa-paperclip fa-rotate-180 h-4 w-auto" width="1em"
-                                                    height="1em" fill="currentColor"></em>
-                                            </button>
-                                            <input type="file" #fileDropRef2 id="fileDropRef2" multiple
-                                                style="display: none;" (change)="onFileChangePDF($event)"
-                                                accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
-                                            <button class="mr-1 btn btn-primary" style="padding: 0.2rem 0.57rem;"
-                                                [disabled]="callingOpenai" (click)="sendMessage()"
-                                                aria-label="send text">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                                    fill="currentColor" viewBox="0 0 256 256" class="h-4 w-auto">
-                                                    <path
-                                                        d="M232,127.89a16,16,0,0,1-8.18,14L55.91,237.9A16.14,16.14,0,0,1,48,240a16,16,0,0,1-15.05-21.34L60.3,138.71A4,4,0,0,1,64.09,136H136a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47H64.16a4,4,0,0,1-3.79-2.7l-27.44-80A16,16,0,0,1,55.85,18.07l168,95.89A16,16,0,0,1,232,127.89Z">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
@@ -634,7 +658,8 @@
                         <textarea #inputTextArea class="form-control data-hj-allow" style="height:320px;"
                             [(ngModel)]="medicalText" name="medicalText"
                             placeholder="{{'summaryDx.placeholder' | translate }}"></textarea>
-                            <button class="mt-2 mr-1 btn btn-sm btn-secondary" (click)="useSampleText()">{{'demo.Use example text' | translate }}</button>
+                        <button class="mt-2 mr-1 btn btn-sm btn-secondary" (click)="useSampleText()">{{'demo.Use example
+                            text' | translate }}</button>
                         <button type="button" class="ml-1 mt-2 btn btn-sm btn-primary"
                             [disabled]="callingSummary || recording || medicalText.length==0"
                             title="{{'summaryDx.Generate summary' | translate }}" (click)="createFile();">
@@ -659,7 +684,7 @@
         </button>
     </div>
     <div class="modal-body content-wrapper p-2" id="idBody">
-       
+
         <div class="row mt-3">
             <div class="col-md-6">
                 <h5>{{'demo.Original Text' | translate }}</h5>
@@ -669,14 +694,17 @@
             </div>
             <div class="col-md-6" *ngIf="translatedText !='' ">
                 <h5>{{'demo.Translated Text' | translate }}</h5>
-                <div *ngIf="!callingTranslate" class="border p-2" style="min-height: 150px; max-height: 60vh;overflow-y: auto;">
+                <div *ngIf="!callingTranslate" class="border p-2"
+                    style="min-height: 150px; max-height: 60vh;overflow-y: auto;">
                     <span id="pdf-content" [innerHTML]="translatedText | safe: 'html'"></span>
                 </div>
                 <span *ngIf="!callingTranslate" class="float-right pt-2">
-                    <button class="btn btn-primary btn-sm ml-1" (click)="changeLanguage()">{{'demo.Change language' | translate }}</button>
-                    <button class="btn btn-primary btn-sm ml-1" (click)="download2()">{{'generics.ExportData' | translate }}</button>
+                    <button class="btn btn-primary btn-sm ml-1" (click)="changeLanguage()">{{'demo.Change language' |
+                        translate }}</button>
+                    <button class="btn btn-primary btn-sm ml-1" (click)="download2()">{{'generics.ExportData' |
+                        translate }}</button>
                 </span>
-                
+
             </div>
             <div class="col-md-6" *ngIf="translatedText =='' ">
                 <div *ngIf="!callingTranslate">
@@ -688,8 +716,10 @@
                             </option>
                         </select>
                     </div>
-                    <button type="button" class="btn btn-primary mr-1" (click)="translateText();">{{'generics.Translate' | translate }}</button>
-                    <button type="button" class="btn btn-primary ml-1" (click)="translateTextIA();">{{'generics.Translate' | translate }} (IA)</button>
+                    <button type="button" class="btn btn-primary mr-1" (click)="translateText();">{{'generics.Translate'
+                        | translate }}</button>
+                    <button type="button" class="btn btn-primary ml-1"
+                        (click)="translateTextIA();">{{'generics.Translate' | translate }} (IA)</button>
                 </div>
                 <div *ngIf="callingTranslate" class="row">
                     <span class="col-md-12 center-elements">
@@ -697,14 +727,15 @@
                         <p>{{'generics.Please wait' | translate }}</p>
                     </span>
                 </div>
-              
+
             </div>
 
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModalTranslate();">{{'generics.Close' | translate }}</button>
-        
+        <button type="button" class="btn btn-secondary" (click)="closeModalTranslate();">{{'generics.Close' | translate
+            }}</button>
+
     </div>
 </ng-template>
 <ng-template #showPanelEdit let-modal>
@@ -720,7 +751,39 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">{{'generics.SaveAndClose' | translate }}</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelChanges(modal)">{{'generics.Cancel' | translate }}</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">{{'generics.SaveAndClose' | translate
+            }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelChanges(modal)">{{'generics.Cancel' | translate
+            }}</button>
+    </div>
+</ng-template>
+
+<!-- Trial Info Modal Template -->
+<ng-template #contentTrial>
+    <div class="modal-header">
+        <h4 class="modal-title">{{ selectedTrial.BriefTitle }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalTrial()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <p><strong>NCT ID:</strong> {{ selectedTrial.NCTId }}</p>
+            <p><strong>Status:</strong> {{ selectedTrial.OverallStatus }}</p>
+        </div>
+
+        <div class="mb-3">
+            <h5>Description</h5>
+            <p>{{ selectedTrial.BriefSummary }}</p>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" [href]="'https://clinicaltrials.gov/study/' + selectedTrial.NCTId" target="_blank">
+            View on ClinicalTrials.gov
+        </a>
+        <button type="button" class="btn btn-secondary" (click)="closeModalTrial()">
+            Close
+        </button>
     </div>
 </ng-template>
