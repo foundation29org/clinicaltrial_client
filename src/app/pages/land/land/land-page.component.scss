@@ -82,6 +82,17 @@
   //align-items: center;
   //min-height: calc(100vh - 100px);
   padding: 0;
+  text-align: center;
+  
+  .logo-img {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+    
+    @media (max-width: 576px) {
+      max-width: 80px;
+    }
+  }
 }
 
 
@@ -93,8 +104,14 @@
   z-index: 2;
 }
 
-.buttomback2{
-  float: left;
+.buttomback2 {
+  @media (min-width: 992px) {
+    margin-right: 1rem;
+  }
+  @media (max-width: 991px) {
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 .row-home {
@@ -102,6 +119,16 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap; /* Permitir el ajuste automático de las columnas */
+  
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    @media (max-width: 576px) {
+      margin-bottom: 2rem;
+    }
+  }
 }
 
 .col-md-4 {
@@ -210,7 +237,7 @@ ul, ol {
   height: 80%;
   width: 100%;
   box-sizing: border-box;
-  padding-top: 1rem;
+  padding-top: 0rem !important;
   padding-bottom: 1rem;
 }
 
@@ -453,10 +480,10 @@ input[type="text"],
 
 .info-circle {
   background-color: transparent; /* o #ffffff si prefieres */
-  color: #ff3f3f;
+  color: #ffffff;
   border: 2px solid #ffffff;
   border-radius: 50%;
-  width: 38px;
+  width: 30px;
   height: 30px;
   font-weight: bold;
   cursor: pointer;
@@ -477,110 +504,145 @@ input[type="text"],
 
 .arrow-icon {
   display: inline-block;
-  width: 0.8rem;
-  height: 0.8rem;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000;
+  transition: transform 0.2s ease;
+  margin-right: 4px;
+
+  &.rotated {
+    transform: rotate(-90deg);
+  }
 }
 
-/* Al rotar, la flecha apunta hacia abajo */
-.arrow-icon.rotated {
-  transform: rotate(135deg);
+.text-muted {
+  color: #6c757d;
 }
 
-/* Ejemplo de spacing */
 .ms-2 {
   margin-left: 0.5rem !important;
 }
 
-/* Contenedor general de criterios */
-.criteria-container {
-  /* Un poquito de padding alrededor */
-  padding: 0.5rem;
-  background: #fdfdfd; /* color neutro para el fondo */
-  border-radius: 4px;
-  margin-top: 0.5rem; 
+.ms-4 {
+  margin-left: 1rem;
 }
 
-/* Título con fondo azul suave */
+.ps-4 {
+  padding-left: 1rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+/* Locations section styles */
+.arrow-icon {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000;
+  transition: transform 0.2s ease;
+  margin-right: 4px;
+
+  &.rotated {
+    transform: rotate(-90deg);
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: disc;
+  margin-bottom: 0.5rem;
+  padding-left: 1.2rem;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.ms-2 {
+  margin-left: 0.5rem !important;
+}
+
+.ps-3 {
+  padding-left: 0.75rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+/* Contenedor general de criterios */
+.criteria-container {
+  padding: 0.5rem;
+  background: #fdfdfd;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+/* Título con fondo gris */
 .criteria-section-title {
-  background: #D9D9D9; /* azul muy suave */
+  background: #D9D9D9;
   padding: 0.5rem 0.75rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
   font-weight: 410;
   border-radius: 4px; 
   font-size: 0.95rem;
-  /* Alineado con la flecha; 
-     si quieres que empiece donde está la flecha, 
-     puedes ajustar margin-left, etc. */
 }
 
 /* Filas (cada criterio) */
 .criteria-row {
-  background: #f9f9f9;  /* tono claro distinto del título */
-  margin-bottom: 3px;   /* mínimo espacio entre filas */
+  background: #f9f9f9;
+  margin: 0 0 3px 0;   /* Ajustado el margen para alinear con el título */
   border-radius: 4px;
-  padding: 0.3rem;
+  padding: 0.3rem 0.75rem;  /* Ajustado el padding horizontal para alinear con el título */
 }
 
-/* Columna para el icono de inicio (✔️ o ❌ de la fila) */
+/* Columna para el icono */
 .icon-column {
-  font-size: 1.2rem; 
+  font-size: 1.2rem;
   margin-right: 0.5rem;
-  /* Podrías ajustar el color:
-     color: #38a438; (por ejemplo) 
-     si quieres un color distintivo 
-  */
+  padding-left: 0;  /* Eliminado el padding izquierdo */
 }
 
 /* Texto principal del criterio */
 .criteria-text {
   font-size: 0.95rem;
-  /* Ajusta si deseas más grande o más pequeño */
-}
-
-/* Contenedor de los 3 "checkboxes" de la fila */
-.criteria-checkboxes .checkbox-label {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  /* Evita el desborde horizontal si hay muchos */
-  white-space: nowrap;
-}
-
-/* Ícono negro (✔️ ❌ ?) dentro del checkbox */
-.black-icon {
-  color: #000;
-  margin-left: 4px;
-  font-size: 1rem;
-}
-
-/* Ajusta el input[type=checkbox] según tu diseño */
-.criteria-checkboxes input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  margin: 0;
-  accent-color: #000;  /* si tu navegador lo soporta */
-}
-
-/* Espaciado horizontal entre checkboxes */
-.gap-2 > *:not(:first-child) {
-  margin-left: 8px;
+  padding-right: 0.75rem;  /* Añadido padding derecho para balance */
 }
 
 .trial-title-link {
     color: inherit;
-    text-decoration: none;
+    text-decoration: underline;
     transition: opacity 0.2s ease;
     display: block;
     padding: 4px 0;
 
     &:hover {
         opacity: 0.7;
-        text-decoration: underline;
     }
 }
 
@@ -609,6 +671,540 @@ input[type="text"],
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 40px; /* Para que ocupe algo de espacio */
-  /* y un margin-top si quieres separarlo un poco del borde */
+  min-height: 40px;
+}
+
+/* Estilos para el dropdown personalizado */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  
+  .dropdown-toggle {
+    min-width: 200px;
+    text-align: left;
+    position: relative;
+    background-color: white;
+    border: 1px solid #ced4da;
+    padding-right: 28px;  // Espacio para la flecha
+    
+    &::after {
+      position: absolute;
+      right: 10px;
+      top: 45%;
+    }
+  }
+
+  .custom-dropdown-menu {
+    width: 100%;
+    min-width: 232px; // Increased from 200px to accommodate longer status texts
+    padding: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  }
+
+  .custom-checkbox-container {
+    &:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+  }
+
+  .custom-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+    white-space: nowrap; // Prevent text wrapping
+    
+    &:hover {
+      background-color: #f8f9fa;
+    }
+
+    input[type="checkbox"] {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      position: relative;
+      top: -1px;
+      flex-shrink: 0; // Prevent checkbox from shrinking
+    }
+
+    label {
+      margin: 0;
+      padding-left: 0.75rem;
+      cursor: pointer;
+      user-select: none;
+      color: #212529;
+      font-size: 0.875rem;
+      line-height: 1.2;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 200px; // Ensure minimum width for the label
+      white-space: nowrap; // Prevent text wrapping
+
+      .badge {
+        display: inline-block;
+        min-width: 1.5rem;
+        padding: 0.25em 0.6em;
+        font-size: 0.75rem;
+        font-weight: normal;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 10px;
+        background-color: #e9ecef;
+        color: #6c757d;
+        margin-left: 0rem; // Increased from 0.5rem
+        flex-shrink: 0; // Prevent badge from shrinking
+      }
+    }
+  }
+}
+
+/* Estilos para el multi-select */
+select[multiple] {
+  display: none;
+}
+
+.location-list {
+  padding-left: 0;
+  margin: 0;
+
+  .country {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+
+    .arrow-icon {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #333;
+      margin-right: 8px;
+      transition: transform 0.2s ease;
+
+      &.rotated {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  .city {
+    padding-left: 24px; // This aligns with the country text (arrow width + margin-right)
+    font-weight: 500;
+    margin-top: 0.5rem;
+    color: #666;
+  }
+
+  .hospital-list {
+    margin-left: 1.5rem;
+    list-style-type: disc;
+    margin-top: 0.25rem;
+    
+    li {
+      margin: 0.25rem 0;
+      color: #333;
+    }
+  }
+}
+
+.single-location {
+    padding: 0.5rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+
+    p {
+        line-height: 1.5;
+    }
+}
+
+.location-section {
+  margin-top: 0;
+
+  .location-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .fa-chevron-down {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      color: #666;
+
+      &.rotated {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .location-content {
+    margin-top: 0.5rem;
+    margin-left: 1.5rem;
+  }
+}
+
+.location-list.compact {
+  .country-section {
+    margin-bottom: 0.25rem;
+  }
+
+  .country {
+    padding: 0.25rem;
+    margin-bottom: 0.125rem;
+    background-color: #fff;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+  }
+
+  .country-content {
+    padding-left: 1rem;
+  }
+
+  .city {
+    padding: 0.125rem 0;
+    margin-top: 0.125rem;
+    font-size: 0.9rem;
+  }
+
+  .hospital-list {
+    margin: 0.125rem 0 0.125rem 1rem;
+    
+    li {
+      margin: 0.125rem 0;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.filters-section {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: margin 0.3s ease;
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-control, .btn {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) {
+    margin-top: 0;
+  }
+}
+
+/* Mejoras para el título de Clinical trials */
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  cursor: pointer;
+  
+  .small {
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+}
+
+.d-flex.gap-4 {
+  margin-top: 0.75rem;
+  > .filter-group {
+    margin-right: 1rem;
+  }
+}
+
+.row-home {
+  justify-content: center;
+}
+
+.filters-section {
+  @media (max-width: 768px) {
+    margin-top: 1rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .dropdown-container {
+    width: 100%;
+  }
+}
+
+.btn {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.fa-1-4x {
+  font-size: 1.4em;
+}
+
+.clinical-trials-title {
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 1rem !important;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  
+  .small {
+    font-size: 1rem;
+    color: #3498db;
+    font-weight: 500;
+    line-height: 1.2;
+    position: relative;
+    bottom: 0.25rem;
+  }
+
+  @media (max-width: 991px) {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-size: 1.75rem;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 1.5rem;
+    
+    .small {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .filters-section {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .filters-section {
+    margin-top: 0.5rem;
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+  }
+  
+  .row > [class*='col-'] {
+    margin-bottom: 1rem;
+  }
+}
+
+.card {
+  border-radius: 1rem !important;
+  
+  // Aplicar border-radius específicamente al header del toggle
+  > div:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+
+  // Estilos para el toggle header
+  .p-2.d-flex.bg-secondary {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    margin: -1px; // Compensar el borde de la card
+    padding: 0.75rem 1rem !important; // Padding más consistente
+    
+    h5 {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+
+  // Estilos para el texto dentro de la card
+  .trial-title-link {
+    font-size: 1rem;
+  }
+
+  .card-body {
+    p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+  }
+
+  // Estilos para las ubicaciones
+  .location-list.compact {
+    .country {
+      font-size: 0.9rem;
+    }
+
+    .city {
+      font-size: 0.85rem;
+    }
+
+    .hospital-list {
+      li {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  // Estilos para los criterios
+  .criteria-container {
+    font-size: 0.9rem;
+
+    .criteria-section-title {
+      font-size: 0.95rem;
+    }
+
+    .criteria-row {
+      font-size: 0.85rem;
+    }
+
+    .criteria-text {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Media queries para ajustar tamaños en pantallas pequeñas
+@media (max-width: 768px) {
+  .card {
+    .trial-title-link {
+      font-size: 0.95rem;
+    }
+
+    .card-body {
+      p {
+        font-size: 0.85rem;
+      }
+    }
+
+    .location-list.compact {
+      .country, .city, .hospital-list li {
+        font-size: 0.8rem;
+      }
+    }
+
+    .criteria-container {
+      font-size: 0.85rem;
+
+      .criteria-section-title {
+        font-size: 0.9rem;
+      }
+
+      .criteria-row, .criteria-text {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;  // Padding general para el contenedor
+
+  .d-flex {
+    margin-left: 0.5rem;  // Mover el conjunto checkbox+título hacia la derecha
+  }
+
+  h5 {
+    margin: 0;
+  }
+
+  .form-check-input {
+    margin-top: 0;
+    cursor: pointer;
+  }
+}
+
+.categories-container {
+  margin-bottom: 1rem;
+  
+  .row {
+    margin-left: 0.5rem;  // Ajustado para mantener la indentación relativa
+  }
+}
+
+::ng-deep .trial-info-modal {
+  .modal-dialog {
+    max-width: 800px; // Wider modal
+    width: 90%;
+  }
+
+  .modal-content {
+    max-height: 80vh; // Less height
+  }
+
+  .modal-body {
+    overflow-y: auto;
+  }
+}
+
+.navigation-tabs {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  padding: 0 1rem;
+
+  .tab {
+    position: relative;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    color: #666;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    user-select: none;
+
+    &.active {
+      color: #d00;
+    }
+
+    .underline {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #d00;
+      transition: width 0.3s ease;
+      animation: slide-in 0.3s forwards;
+    }
+
+    &:hover {
+      color: #d00;
+    }
+  }
+}
+
+@keyframes slide-in {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }

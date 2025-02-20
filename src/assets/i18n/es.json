@@ -1,7 +1,7 @@
 {
   "demo":{
-    "t1": "¿Qué es TrialMatch?",
-    "des": "TrialMatch es una prueba de concepto desarrollada por Fundación 29, aprovechando el potencial de los LLM para simplificar la búsqueda de ensayos clínicos disponibles. Analiza informes médicos y empareja a los pacientes con ensayos relevantes, haciendo el proceso más rápido y accesible para todos. Esta iniciativa tiene el potencial de beneficiarse y alinearse con los objetivos del proyecto europeo READI.",
+    "t1": "¿Qué es TrialGPT?",
+    "des": "TrialGPT es una prueba de concepto desarrollada por Fundación 29, aprovechando el potencial de los LLM para simplificar la búsqueda de ensayos clínicos disponibles. Analiza informes médicos y empareja a los pacientes con ensayos relevantes, haciendo el proceso más rápido y accesible para todos. Esta iniciativa tiene el potencial de beneficiarse y alinearse con los objetivos del proyecto europeo READI.",
     "What do you want to do?": "¿Qué quiere hacer?",
     "Summarize genetic reports": "Resumir informes genéticos",
     "Clinical trials": "Ensayos clínicos",
@@ -236,8 +236,8 @@
     "AdditionalInformation": "Información adicional"
   },
   "disclaimer":{
-    "t1": "Bienvenido a TrialMatch, tu asistente de información genética",
-    "m1.1": "TrialMatch está diseñado para simplificar tu vida, proporcionando explicaciones claras y entendibles sobre información genética para pacientes y sus familias. ¡Ahorra tiempo y esfuerzo al comprender información genética compleja y enfócate en lo más importante!",
+    "t1": "Bienvenido a TrialGPT, tu asistente de información genética",
+    "m1.1": "TrialGPT está diseñado para simplificar tu vida, proporcionando explicaciones claras y entendibles sobre información genética para pacientes y sus familias. ¡Ahorra tiempo y esfuerzo al comprender información genética compleja y enfócate en lo más importante!",
     "m1.2": "¿Cómo funciona?",
     "m1.3": "1. Sube tu informe o pega tu texto:",
     "m1.4": "Solo tienes que cargar el informe genético o pegar el texto relacionado con la enfermedad y los antecedentes familiares que deseas que te expliquemos.",
@@ -245,9 +245,9 @@
     "m1.6": "Con un solo clic, nuestra herramienta creará una explicación detallada y estructurada, destacando la información clave para una comprensión rápida y eficiente.",
     "m1.7": "3. Evalúa y mejora:",
     "m1.8": "Tu opinión es valiosa. Después de revisar la explicación, te invitamos a proporcionar feedback sobre la usabilidad, la claridad y la calidad de la información generada. ¡Ayúdanos a mejorar y ajustarnos a tus necesidades!",
-    "m1.9": "Carga tu primer informe o pega tu texto y descubre la facilidad de comprender información genética con TrialMatch.",
-    "t2": "Privacidad y gestión de datos en TrialMatch",
-    "m2.1": "En TrialMatch, valoramos y protegemos tu privacidad. Nos regimos por las normativas más estrictas, incluido el Reglamento General de Protección de Datos (GDPR), para asegurar que tu información esté segura y tus derechos respetados.",
+    "m1.9": "Carga tu primer informe o pega tu texto y descubre la facilidad de comprender información genética con TrialGPT.",
+    "t2": "Privacidad y gestión de datos en TrialGPT",
+    "m2.1": "En TrialGPT, valoramos y protegemos tu privacidad. Nos regimos por las normativas más estrictas, incluido el Reglamento General de Protección de Datos (GDPR), para asegurar que tu información esté segura y tus derechos respetados.",
     "m2.2": "Nuestro compromiso con la privacidad:",
     "m2.3": "No guardamos tu Informe: Una vez subes un informe médico para su resumen, queremos que sepas que no almacenamos el texto del informe ni ninguna información personal relacionada con él. Utilizamos el informe exclusivamente para generar el resumen y, una vez hecho esto, los datos del informe se eliminan inmediatamente de nuestros servidores.",
     "m2.4": "Feedback y datos de contacto:",

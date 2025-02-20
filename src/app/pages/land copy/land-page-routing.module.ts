@@ -11,7 +11,7 @@ const routes: Routes = [
         path: '.',
         component: LandPageComponent,
         data: {
-          title: 'TrialMatch'
+          title: 'TrialGPT'
         },
       }
     ]
