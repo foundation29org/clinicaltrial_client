@@ -1,7 +1,7 @@
 {
    "demo":{
-      "t1": "Cos'è TrialMatch?",
-      "des": "TrialMatch è una proof of concept sviluppata da Fundación 29, sfruttando il potenziale degli LLM per semplificare la ricerca di trial clinici disponibili. Analizza referti medici e abbina i pazienti a trial rilevanti, rendendo il processo più veloce e accessibile per tutti. Questa iniziativa ha il potenziale di beneficiare e allinearsi con gli obiettivi del progetto europeo READI.",
+      "t1": "Cos'è TrialGPT?",
+      "des": "TrialGPT è una proof of concept sviluppata da Fundación 29, sfruttando il potenziale degli LLM per semplificare la ricerca di trial clinici disponibili. Analizza referti medici e abbina i pazienti a trial rilevanti, rendendo il processo più veloce e accessibile per tutti. Questa iniziativa ha il potenziale di beneficiare e allinearsi con gli obiettivi del progetto europeo READI.",
       "What do you want to do?": "Cosa vuoi fare?",
       "Summarize genetic reports": "Riassumi i referti genetici",
       "Clinical trials": "Studi clinici",
@@ -236,8 +236,8 @@
     "AdditionalInformation": "Informazioni aggiuntive"
    },
    "disclaimer":{
-      "t1": "Benvenuto in TrialMatch, il tuo assistente per le informazioni genetiche",
-      "m1.1": "TrialMatch è progettato per semplificarti la vita fornendo spiegazioni chiare e comprensibili delle informazioni genetiche per i pazienti e le loro famiglie. Risparmia tempo e fatica comprendendo informazioni genetiche complesse e concentrati su ciò che conta di più!",
+      "t1": "Benvenuto in TrialGPT, il tuo assistente per le informazioni genetiche",
+      "m1.1": "TrialGPT è progettato per semplificarti la vita fornendo spiegazioni chiare e comprensibili delle informazioni genetiche per i pazienti e le loro famiglie. Risparmia tempo e fatica comprendendo informazioni genetiche complesse e concentrati su ciò che conta di più!",
       "m1.2": "Come funziona?",
       "m1.3": "1. Carica il tuo rapporto o incolla il tuo testo:",
       "m1.4": "Devi solo caricare il referto genetico o incollare il testo relativo alla malattia e alla storia familiare che vuoi che ti spieghiamo.",
@@ -245,9 +245,9 @@
       "m1.6": "Con un solo clic, il nostro strumento creerà una spiegazione dettagliata e strutturata, evidenziando le informazioni chiave per una comprensione rapida ed efficiente.",
       "m1.7": "3. Valutare e migliorare:",
       "m1.8": "La tua opinione è preziosa. Dopo aver esaminato la spiegazione, ti invitiamo a fornire un feedback sull'usabilità, la chiarezza e la qualità delle informazioni generate. Aiutaci a migliorare e ad adattarci alle tue esigenze!",
-      "m1.9": "Carica il tuo primo report o incolla il tuo testo e scopri la facilità di comprendere le informazioni genetiche con TrialMatch.",
-     "t2": "Privacy e gestione dei dati presso TrialMatch",
-     "m2.1": "Noi di TrialMatch diamo valore e proteggiamo la tua privacy. Rispettiamo le normative più severe, incluso il Regolamento generale sulla protezione dei dati (GDPR), per garantire che le tue informazioni siano sicure e che i tuoi diritti siano rispettati.",
+      "m1.9": "Carica il tuo primo report o incolla il tuo testo e scopri la facilità di comprendere le informazioni genetiche con TrialGPT.",
+     "t2": "Privacy e gestione dei dati presso TrialGPT",
+     "m2.1": "Noi di TrialGPT diamo valore e proteggiamo la tua privacy. Rispettiamo le normative più severe, incluso il Regolamento generale sulla protezione dei dati (GDPR), per garantire che le tue informazioni siano sicure e che i tuoi diritti siano rispettati.",
      "m2.2": "Il nostro impegno per la privacy:",
      "m2.3": "Non memorizziamo il tuo referto: una volta caricato un referto medico per il riepilogo, vogliamo che tu sappia che non memorizziamo il testo del referto o qualsiasi informazione personale ad esso correlata. Utilizziamo il referto esclusivamente per generare il riepilogo e, una volta fatto ciò, i dati del report vengono immediatamente cancellati dai nostri server.",
      "m2.4": "Feedback e dettagli di contatto:",

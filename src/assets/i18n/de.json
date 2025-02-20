@@ -1,7 +1,7 @@
 {
    "demo":{
-      "t1": "Was ist TrialMatch?",
-      "des": "TrialMatch ist ein Proof of Concept, der von der Fundación 29 entwickelt wurde und das Potenzial von LLMs nutzt, um die Suche nach verfügbaren klinischen Studien zu vereinfachen. Es analysiert medizinische Berichte und bringt Patienten mit relevanten Studien zusammen, wodurch der Prozess schneller und für alle zugänglicher wird. Diese Initiative könnte von den Zielen des europäischen READI-Projekts profitieren und sich mit ihnen decken.",
+      "t1": "Was ist TrialGPT?",
+      "des": "TrialGPT ist ein Proof of Concept, der von der Fundación 29 entwickelt wurde und das Potenzial von LLMs nutzt, um die Suche nach verfügbaren klinischen Studien zu vereinfachen. Es analysiert medizinische Berichte und bringt Patienten mit relevanten Studien zusammen, wodurch der Prozess schneller und für alle zugänglicher wird. Diese Initiative könnte von den Zielen des europäischen READI-Projekts profitieren und sich mit ihnen decken.",
       "What do you want to do?": "Was möchten Sie tun?",
       "Summarize genetic reports": "Genetische Berichte zusammenfassen",
       "Clinical trials": "Klinische studien",
@@ -236,8 +236,8 @@
     "AdditionalInformation": "Zusätzliche informationen"
    },
    "disclaimer":{
-      "t1": "Willkommen bei TrialMatch, Ihrem genetischen Informationsassistenten",
-      "m1.1": "TrialMatch wurde entwickelt, um Ihr Leben zu vereinfachen, indem es Patienten und ihren Familien klare und verständliche Erklärungen zu genetischen Informationen liefert. Sparen Sie Zeit und Mühe beim Verständnis komplexer genetischer Informationen und konzentrieren Sie sich auf das Wesentliche!",
+      "t1": "Willkommen bei TrialGPT, Ihrem genetischen Informationsassistenten",
+      "m1.1": "TrialGPT wurde entwickelt, um Ihr Leben zu vereinfachen, indem es Patienten und ihren Familien klare und verständliche Erklärungen zu genetischen Informationen liefert. Sparen Sie Zeit und Mühe beim Verständnis komplexer genetischer Informationen und konzentrieren Sie sich auf das Wesentliche!",
       "m1.2": "Wie funktioniert es?",
       "m1.3": "1. Laden Sie Ihren Bericht hoch oder fügen Sie Ihren Text ein:",
       "m1.4": "Sie müssen nur den genetischen Bericht hochladen oder den Text zu der Krankheit und Familiengeschichte einfügen, die wir Ihnen erklären sollen.",
@@ -245,9 +245,9 @@
       "m1.6": "Mit einem einzigen Klick erstellt unser Tool eine detaillierte und strukturierte Erklärung und hebt wichtige Informationen für ein schnelles und effizientes Verständnis hervor.",
       "m1.7": "3. Bewerten und verbessern:",
       "m1.8": "Ihre Meinung ist wertvoll. Nachdem Sie die Erklärung gelesen haben, laden wir Sie ein, uns Feedback zur Benutzerfreundlichkeit, Klarheit und Qualität der generierten Informationen zu geben. Helfen Sie uns, uns zu verbessern und an Ihre Bedürfnisse anzupassen!",
-      "m1.9": "Laden Sie Ihren ersten Bericht hoch oder fügen Sie Ihren Text ein und entdecken Sie, wie einfach es ist, genetische Informationen mit TrialMatch zu verstehen.",
-     "t2": "Datenschutz und Datenmanagement bei TrialMatch",
-     "m2.1": "Bei TrialMatch schätzen und schützen wir Ihre Privatsphäre. Wir halten uns an die strengsten Vorschriften, einschließlich der Allgemeinen Datenschutzverordnung (DSGVO), um sicherzustellen, dass Ihre Daten sicher sind und Ihre Rechte respektiert werden.",
+      "m1.9": "Laden Sie Ihren ersten Bericht hoch oder fügen Sie Ihren Text ein und entdecken Sie, wie einfach es ist, genetische Informationen mit TrialGPT zu verstehen.",
+     "t2": "Datenschutz und Datenmanagement bei TrialGPT",
+     "m2.1": "Bei TrialGPT schätzen und schützen wir Ihre Privatsphäre. Wir halten uns an die strengsten Vorschriften, einschließlich der Allgemeinen Datenschutzverordnung (DSGVO), um sicherzustellen, dass Ihre Daten sicher sind und Ihre Rechte respektiert werden.",
      "m2.2": "Unser Engagement für den Datenschutz:",
      "m2.3": "Wir speichern Ihren Bericht nicht: Sobald Sie einen medizinischen Bericht zur Zusammenfassung hochladen, möchten wir Sie darüber informieren, dass wir weder den Text des Berichts noch damit verbundene persönliche Informationen speichern. Wir verwenden den Bericht. ausschließlich zur Erstellung der Zusammenfassung. Sobald dies erledigt ist, werden die Berichtsdaten sofort von unseren Servern gelöscht.",
      "m2.4": "Feedback und Kontaktdaten:",
