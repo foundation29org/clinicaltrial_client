@@ -14,9 +14,9 @@
                             <div class="col-12 col-sm-4 mb-3">
                                 <img class="logo-img pointer" [src]="icons[3].data"
                                     (click)="entryOpt('opt1', contentPhoto)" />
-                                <buttom class="btn btn-sm btn-primary text-bold-700 mt-2"
+                                <button class="btn btn-sm btn-primary text-bold-700 mt-2"
                                     (click)="entryOpt('opt1', contentPhoto)">{{'demo.Take a photo' | translate }}
-                                </buttom>
+                                </button>
                             </div>
                             <div class="col-12 col-sm-4 mb-3">
                                 <img class="logo-img" [src]="icons[4].data" />
@@ -24,17 +24,17 @@
                                     <input class="pointer" aria-label="new file" type="file" #fileDropRef
                                         id="fileDropRef" multiple (change)="onFileChangePDF($event);"
                                         accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
-                                    <buttom class="btn btn-sm btn-primary text-bold-700 mt-2" for="fileDropRef">
-                                        {{'demo.Use a file' | translate }}</buttom>
+                                    <button class="btn btn-sm btn-primary text-bold-700 mt-2" for="fileDropRef">
+                                        {{'demo.Use a file' | translate }}</button>
                                 </div>
-                                <!--<buttom class="btn btn-sm btn-primary text-bold-700 mt-2" (click)="entryOpt('opt2', null)">Usar uno o varios informes</buttom>-->
+                                <!--<button class="btn btn-sm btn-primary text-bold-700 mt-2" (click)="entryOpt('opt2', null)">Usar uno o varios informes</button>-->
                             </div>
                             <div class="col-12 col-sm-4 mb-3">
                                 <img class="logo-img pointer" [src]="icons[5].data"
                                     (click)="showPanelMedium(contentSummaryDx)" />
-                                <buttom class="btn btn-sm btn-primary text-bold-700 mt-2"
+                                <button class="btn btn-sm btn-primary text-bold-700 mt-2"
                                     (click)="showPanelMedium(contentSummaryDx)">{{'demo.Write text' | translate }}
-                                </buttom>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -56,10 +56,10 @@
                 <div class="mt-4 col-md-12">
                     <div class="row">
                         <div class="col-lg-5">
-                            <buttom class="buttomback2 btn btn-sm btn-primary text-bold-700 w-100 mb-3"
+                            <button class="buttonback2 btn btn-sm btn-primary text-bold-700 w-100 mb-3"
                                 (click)="backmode0()">
                                 {{'demo.New patient' | translate }}
-                            </buttom>
+                            </button>
 
                             <!-- Main Card with Toggle Header -->
                             <div class="card rounded-lg shadow-sm" *ngIf="docs.length > 0">
@@ -122,17 +122,10 @@
                                                         </a>
                                                         <div ngbDropdownMenu aria-labelledby="dropdownSympt{{i}}"
                                                             class="dropdown-menu">
-                                                            <a class="dropdown-item py-1 border-bottom"
+                                                            <a class="dropdown-item py-1" 
                                                                 (click)="getBlobUrl(doc)" target="_blank">
                                                                 <i class="fa fa-file"></i>
                                                                 <span class="ml-2">{{'messages.m1.3' | translate
-                                                                    }}</span>
-                                                            </a>
-                                                            <a *ngIf="doc.state=='done'"
-                                                                class="dropdown-item py-1 text-danger"
-                                                                href="javascript:;" (click)="deleteDoc(doc, i);">
-                                                                <i class="fa fa-trash"></i>
-                                                                <span class="ml-2">{{'generics.Delete' | translate
                                                                     }}</span>
                                                             </a>
                                                         </div>
@@ -141,51 +134,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="border-top p-3" style="background-color: #f1f3f5;">
-                                        <p class="text-bold-700 text-center mb-3">{{'Add new report' | translate }}</p>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <div class="text-center mb-2">
-                                                    <img class="logo-img-sm pointer" [src]="icons[3].data" width="40px"
-                                                        (click)="entryOpt('opt1', contentPhoto)" />
-                                                </div>
-                                                <div>
-                                                    <buttom class="btnblock btn btn-sm btn-primary w-100"
-                                                        (click)="entryOpt('opt1', contentPhoto)">{{'Take another photo'
-                                                        |
-                                                        translate }}</buttom>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="text-center mb-2">
-                                                    <img class="logo-img-sm" [src]="icons[4].data" width="40px" />
-                                                </div>
-                                                <div>
-                                                    <div class="container-custom2">
-                                                        <input class="pointer" aria-label="new file" type="file"
-                                                            #fileDropRef id="fileDropRef" multiple
-                                                            (change)="onFileChangePDF($event);"
-                                                            accept=".pdf, .docx, .jpg, .png, .jpeg, .bmp, .tiff, .heif, .pptx" />
-                                                        <buttom class="btnblock btn btn-sm btn-primary w-100"
-                                                            for="fileDropRef">{{'Use another file' | translate }}
-                                                        </buttom>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="text-center mb-2">
-                                                    <img class="logo-img-sm pointer" [src]="icons[5].data" width="40px"
-                                                        (click)="showPanelMedium(contentSummaryDx)" />
-                                                </div>
-                                                <div>
-                                                    <buttom class="btnblock btn btn-sm btn-primary w-100"
-                                                        (click)="showPanelMedium(contentSummaryDx)">{{'Write another
-                                                        text' |
-                                                        translate }}</buttom>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
 
                                 <!-- Events View -->
@@ -356,7 +305,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button class="buttomback2 btn btn-sm btn-primary text-bold-700 w-100 mb-1"
+                                        <button class="buttonback2 btn btn-sm btn-primary text-bold-700 w-100 mb-1"
                                             (click)="clearFilters()">
                                             Clear filters
                                         </button>
@@ -528,7 +477,7 @@
     <div class="modal-body content-wrapper p-2" id="idBody">
         <div class="p-1">
             <div>
-                <span class="animate-bottom" *ngIf="showButtonScroll" id="buttomScroll">
+                <span class="animate-bottom" *ngIf="showButtonScroll" id="buttonScroll">
                     <button type="button" class="btn btn-dark round mb-0" (click)="goToTop()">{{'summaryDx.Go top' |
                         translate }}</button>
                 </span>
@@ -634,7 +583,7 @@
     <div class="modal-body content-wrapper p-2" id="idBody">
         <div class="p-1">
             <div>
-                <span class="animate-bottom" *ngIf="showButtonScroll" id="buttomScroll">
+                <span class="animate-bottom" *ngIf="showButtonScroll" id="buttonScroll">
                     <button type="button" class="btn btn-dark round mb-0" (click)="goToTop()">{{'summaryDx.Go top' |
                         translate }}</button>
                 </span>

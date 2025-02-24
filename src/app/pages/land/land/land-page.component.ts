@@ -137,8 +137,8 @@ export class LandPageComponent implements OnInit, OnDestroy  {
     'NOT_YET_RECRUITING': '#BCEBCB', // Verde flojo
     'AVAILABLE': '#BCEBCB', // Verde flojo
     'RECRUITING': '#BCEBCB',         // Verde flojo
-    'ENROLLING_BY_INVITATION': '#FFC107', // Naranja warning cálido
-    'ACTIVE_NOT_RECRUITING': '#FFC107', // Naranja warning cálido
+    'ENROLLING_BY_INVITATION': '#ffde7b', // Naranja warning cálido
+    'ACTIVE_NOT_RECRUITING': '#ffde7b', // Naranja warning cálido
     'TERMINATED': '#ffa1a2', // Rojo ligero
     'SUSPENDED': '#ffa1a2', // Rojo ligero
     'WITHDRAWN': '#ffa1a2', // Rojo ligero
@@ -220,7 +220,18 @@ export class LandPageComponent implements OnInit, OnDestroy  {
   }
 
   clearFilters(): void {
-    this.filters.status = ['RECRUITING', 'NOT_YET_RECRUITING', 'COMPLETED', 'UNKNOWN']; // Reset to default selected statuses
+    this.filters.status = [
+      'RECRUITING', 
+      'NOT_YET_RECRUITING', 
+      'COMPLETED', 
+      'UNKNOWN', 
+      'ACTIVE', 
+      'SUSPENDED', 
+      'TERMINATED', 
+      'WITHDRAWN', 
+      'AVAILABLE', 
+      'APPROVED'
+    ]; // Reset to default selected statuses
     this.filters.condition = '';
     this.filters.countries = []; // Clear countries filter
   }
@@ -717,9 +728,8 @@ showForm() {
   }
 
   onFileDropped(event) {
-    // Vacías el array antes de agregar los nuevos elementos
+    // Limpiar el array de documentos antes de agregar uno nuevo
     this.docs = [];
-
     for (let file of event) {
       var reader = new FileReader();
       reader.readAsArrayBuffer(file);
@@ -746,6 +756,7 @@ showForm() {
   }
 
   onFileChangePDF(event) {
+    this.docs = [];
     for (let file of event.target.files) {
       if (event.target.files && file) {
         var reader = new FileReader();
@@ -1954,6 +1965,8 @@ async translateInverseSummary(msg): Promise<string> {
             this.modalReference.close();
             this.modalReference = undefined;
           }
+          // Limpiar el array de documentos antes de agregar uno nuevo
+          this.docs = [];
           //add file to docs
           let file = this.dataURLtoFile(this.capturedImage, 'photo.png');
           var reader = new FileReader();
